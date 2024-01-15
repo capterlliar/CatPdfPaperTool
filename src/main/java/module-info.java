@@ -1,0 +1,7 @@
+module com.pdfTool {
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    opens com.pdfTool to javafx.fxml;
+    exports com.pdfTool;
+}
