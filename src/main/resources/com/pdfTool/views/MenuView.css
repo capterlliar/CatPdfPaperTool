@@ -1,0 +1,12 @@
+.button {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+    -fx-background-color: #a1a1f8;
+}
+
+#menuBox {
+    -fx-background-color: white;
+}

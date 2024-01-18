@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<fx:root type="HBox"
+         fx:id="menuBox"
+         prefHeight="30"
+         stylesheets="@MenuView.css"
+         xmlns:fx="http://javafx.com/fxml">
+<!--    Please Ignore the error on onAction="...".
+        Exception : 'Controller value already specified' will occur
+        if 'fx:controller=...' is added to solve it because the class is already loaded
+        when we call <MenuViewController/> in a fxml file.-->
+    <Button fx:id="importButton" text="导入" onAction="#importPaper"></Button>
+    <Button fx:id="mergeButton" text="合并所选项" onAction="#mergePDF"></Button>
+    <Button fx:id="splitButton" text="拆分所选项" onAction="#splitPDF"></Button>
+    <Button fx:id="printButton" text="打印所选项" onAction="#print"></Button>
+    <Button fx:id="getPictureButton" text="提取所选文件图片" onAction="#getPicture"></Button>
+    <Button fx:id="getTextButton" text="提取所选文件文字" onAction="#getText"></Button>
+</fx:root>
