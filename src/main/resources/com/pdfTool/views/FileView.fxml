@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<fx:root type="BorderPane"
+         fx:id="menuBox"
+         prefHeight="30"
+         stylesheets="@FileView.css"
+         xmlns:fx="http://javafx.com/fxml">
+    <center>
+        <ScrollPane>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <BorderPane fx:id="bottom" prefHeight="30">
+            <left>
+                <CheckBox fx:id="checkBox" text="全选/全不选"></CheckBox>
+            </left>
+            <right>
+                <HBox spacing="10">
+                    <Button text="修改所选论文标题"></Button>
+                    <Button text="重命名"></Button>
+                </HBox>
+            </right>
+        </BorderPane>
+    </bottom>
+</fx:root>

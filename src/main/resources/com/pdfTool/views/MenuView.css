@@ -4,8 +4,13 @@
 }
 
 .button:hover {
-    -fx-background-color: #a1a1f8;
+    -fx-background-color: #c5c5ff;
 }
+
+.button:pressed {
+    -fx-background-color: #8c8cff;
+}
+
 
 #menuBox {
     -fx-background-color: white;

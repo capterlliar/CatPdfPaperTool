@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+
 public class AppRun extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -17,7 +18,8 @@ public class AppRun extends Application {
 //        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResource("images/plug.png").toString()));
         Scene mainScene = new Scene(root);
         mainScene.setRoot(root);
-//        primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
+        primaryStage.setMaximized(true);
         primaryStage.setScene(mainScene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> Platform.exit());

@@ -1,0 +1,34 @@
+.button {
+    -fx-background-color: white;
+    -fx-border-color: #c5c5ff;
+}
+
+.button:hover {
+    -fx-background-color: #c5c5ff;
+}
+
+.button:pressed {
+    -fx-background-color: #8c8cff;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #c5c5ff;
+}
+
+#bottom {
+    -fx-padding: 5;
+}
+
+#checkBox {
+    -fx-padding: 3 0 0 0;
+}
