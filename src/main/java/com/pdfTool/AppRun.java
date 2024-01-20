@@ -18,6 +18,7 @@ public class AppRun extends Application {
 //        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResource("images/plug.png").toString()));
         Scene mainScene = new Scene(root);
         mainScene.setRoot(root);
+
         primaryStage.setResizable(false);
         primaryStage.setMaximized(true);
         primaryStage.setScene(mainScene);

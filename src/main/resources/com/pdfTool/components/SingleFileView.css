@@ -1,13 +1,12 @@
-#modify, #rename {
+.button {
     -fx-background-color: white;
-    -fx-border-color: #c5c5ff;
 }
 
-#modify:hover, #rename:hover {
+.button:hover {
     -fx-background-color: #c5c5ff;
 }
 
-#modify:pressed, #rename:pressed {
+.button:pressed {
     -fx-background-color: #8c8cff;
 }
 
@@ -23,12 +22,4 @@
 
 .check-box:selected .box {
     -fx-background-color: #c5c5ff;
-}
-
-#bottom {
-    -fx-padding: 5;
-}
-
-#checkBox {
-    -fx-padding: 3 0 0 0;
 }
