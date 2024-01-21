@@ -2,7 +2,6 @@ package com.pdfTool;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -11,8 +10,8 @@ import javafx.stage.StageStyle;
 
 public class AppRun extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("views/PrimaryView.fxml"));
+    public void start(Stage primaryStage) {
+        Parent root = new PrimaryViewController();
         primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setTitle("PDF论文信息提取器");
 //        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResource("images/plug.png").toString()));

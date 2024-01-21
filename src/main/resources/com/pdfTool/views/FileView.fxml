@@ -6,8 +6,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <fx:root type="BorderPane"
-         fx:id="menuBox"
-         prefHeight="30"
          stylesheets="@FileView.css"
          xmlns:fx="http://javafx.com/fxml">
     <center>

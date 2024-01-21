@@ -10,7 +10,3 @@
 .button:pressed {
     -fx-background-color: #8c8cff;
 }
-
-#menuBox {
-    -fx-background-color: white;
-}

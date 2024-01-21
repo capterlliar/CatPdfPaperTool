@@ -5,14 +5,17 @@
 <?import com.pdfTool.PDFViewController?>
 
 <?import com.pdfTool.FileViewController?>
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.HBox?>
+<fx:root type="BorderPane"
+         stylesheets="@PrimaryView.css"
+         xmlns:fx="http://javafx.com/fxml">
     <top>
         <MenuViewController/>
     </top>
-    <left>
-        <PDFViewController/>
-    </left>
     <center>
-        <FileViewController/>
+        <HBox>
+            <PDFViewController fx:id="pdfViewController"/>
+            <FileViewController fx:id="fileViewController"/>
+        </HBox>
     </center>
-</BorderPane>
+</fx:root>

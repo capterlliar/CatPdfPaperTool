@@ -21,7 +21,7 @@ public class PDFViewController extends HBox {
             //TODO: add a method to fxPDF to open a new file.
             //TODO: also adjust default zoom size to 30.
         }
-        sampleViewer.setPrefWidth(800);
+        sampleViewer.setPrefWidth(10000);
         sampleViewer.setTheme(AppearanceType.DARK);
         this.getChildren().add(sampleViewer);
     }

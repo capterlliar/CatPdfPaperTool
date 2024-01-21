@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 <fx:root type="HBox"
-         fx:id="menuBox"
+         style="-fx-background-color: white"
          prefHeight="30"
          stylesheets="@MenuView.css"
          xmlns:fx="http://javafx.com/fxml">

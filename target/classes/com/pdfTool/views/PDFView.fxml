@@ -2,7 +2,6 @@
 
 <?import javafx.scene.layout.HBox?>
 <fx:root type="HBox"
-         fx:id="pdfPreviewer"
          stylesheets="@PDFView.css"
          xmlns:fx="http://javafx.com/fxml">
 </fx:root>

@@ -5,26 +5,29 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
-<fx:root type="BorderPane"
+<?import javafx.scene.control.TextArea?>
+<fx:root type="HBox"
+         spacing="5"
          fx:id="singleFileViewer"
          stylesheets="@SingleFileView.css"
          xmlns:fx="http://javafx.com/fxml">
-    <left>
-        <CheckBox fx:id="checkBox"></CheckBox>
-    </left>
-    <!--center: file name. Loaded in controller.    -->
-    <right>
-        <HBox>
-            <Button>
-                <graphic>
-                    <FontIcon iconLiteral="fa-edit"/>
-                </graphic>
-            </Button>
-            <Button>
-                <graphic>
-                    <FontIcon iconLiteral="fa-remove"/>
-                </graphic>
-            </Button>
-        </HBox>
-    </right>
+    <CheckBox fx:id="checkBox"></CheckBox>
+    <TextArea prefWidth="200" wrapText="true" fx:id="textArea"/>
+    <HBox fx:id="buttons" spacing="2">
+        <Button>
+            <graphic>
+                <FontIcon iconLiteral="fa-file-pdf-o"/>
+            </graphic>
+        </Button>
+        <Button>
+            <graphic>
+                <FontIcon iconLiteral="fa-edit"/>
+            </graphic>
+        </Button>
+        <Button>
+            <graphic>
+                <FontIcon iconLiteral="fa-remove"/>
+            </graphic>
+        </Button>
+    </HBox>
 </fx:root>

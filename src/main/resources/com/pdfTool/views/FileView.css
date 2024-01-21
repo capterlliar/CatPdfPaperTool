@@ -32,3 +32,16 @@
 #checkBox {
     -fx-padding: 3 0 0 0;
 }
+
+.tree-cell:focused {
+    -fx-background-color: ededff;
+    -fx-border-width: 0;
+}
+
+.scroll-pane, .scroll-pane:focused {
+    -fx-background-color: transparent;
+}
+
+.tree-view, .tree-view:focused {
+    -fx-background-color: transparent;
+}
