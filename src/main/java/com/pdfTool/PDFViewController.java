@@ -33,7 +33,7 @@ public class PDFViewController extends HBox {
 
         try {
             fxmlLoader.load();
-            test();
+//            test();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }

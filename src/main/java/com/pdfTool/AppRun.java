@@ -18,7 +18,7 @@ public class AppRun extends Application {
         Scene mainScene = new Scene(root);
         mainScene.setRoot(root);
 
-        primaryStage.setResizable(false);
+//        primaryStage.setResizable(false);
         primaryStage.setMaximized(true);
         primaryStage.setScene(mainScene);
         primaryStage.show();

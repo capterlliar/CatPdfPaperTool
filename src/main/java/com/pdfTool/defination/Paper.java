@@ -15,10 +15,10 @@ public class Paper {
     String filename;
     String newname;
     ArrayList<String> alternatives;
-    public Paper(String p, String f) {
-        path=p;
-        filename=f;
-        newname=null;
-        alternatives=null;
+    public Paper(String path, String filename) {
+        this.path=path;
+        this.filename=filename;
+        this.newname=null;
+        this.alternatives=null;
     }
 }
