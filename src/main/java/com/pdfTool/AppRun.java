@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -14,7 +15,7 @@ public class AppRun extends Application {
         Parent root = new PrimaryViewController();
         primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setTitle("PDF论文信息提取器");
-//        primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResource("images/plug.png").toString()));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/pdfTool/images/pdf.png")));
         Scene mainScene = new Scene(root);
         mainScene.setRoot(root);
 

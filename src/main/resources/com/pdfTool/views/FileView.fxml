@@ -5,11 +5,12 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <fx:root type="BorderPane"
          stylesheets="@FileView.css"
          xmlns:fx="http://javafx.com/fxml">
     <center>
-        <ScrollPane fx:id="scrollPane"></ScrollPane>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true"></ScrollPane>
     </center>
     <bottom>
         <BorderPane fx:id="bottom" prefHeight="30">
@@ -18,8 +19,16 @@
             </left>
             <right>
                 <HBox spacing="10">
-                    <Button fx:id="modify" text="修改所选论文标题"></Button>
-                    <Button fx:id="rename" text="重命名"></Button>
+                    <Button fx:id="modify" text="修改所选论文标题">
+                        <graphic>
+                            <FontIcon iconLiteral="fa-paper-plane"/>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="rename" text="确认" disable="true">
+                        <graphic>
+                            <FontIcon iconLiteral="fa-check"/>
+                        </graphic>
+                    </Button>
                 </HBox>
             </right>
         </BorderPane>

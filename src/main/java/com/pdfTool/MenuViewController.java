@@ -1,12 +1,20 @@
 package com.pdfTool;
 
+import com.pdfTool.components.ExportFileViewController;
+import com.pdfTool.defination.ExportType;
+import com.pdfTool.utils.FileUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class MenuViewController extends HBox {
+    private String initialDir = System.getProperty("user.home");
+    private FileChooser fileChooser = null;
     public MenuViewController(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/MenuView.fxml"));
         fxmlLoader.setRoot(this);
@@ -21,7 +29,17 @@ public class MenuViewController extends HBox {
 
     @FXML
     protected void importPaper(){
-        System.out.println("clicked.");
+        if(fileChooser==null) {
+            fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("PDF", "*.pdf")
+            );
+        }
+        this.fileChooser.setInitialDirectory(new File(this.initialDir));
+        List<File> files = fileChooser.showOpenMultipleDialog(this.getScene().getWindow());
+        if (files!=null) {
+            this.initialDir = FileUtil.getFileDirectory(files.get(0));
+        }
     }
 
     @FXML
@@ -31,7 +49,8 @@ public class MenuViewController extends HBox {
 
     @FXML
     protected void splitPDF(){
-        System.out.println("clicked.");
+        ExportFileViewController splitFile = new ExportFileViewController(ExportType.SPLIT);
+        splitFile.show();
     }
 
     @FXML

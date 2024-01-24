@@ -1,20 +1,23 @@
-#modify, #rename {
+.button {
     -fx-background-color: white;
-    -fx-border-color: #c5c5ff;
 }
 
-#modify:hover, #rename:hover {
+.button:hover {
     -fx-background-color: #c5c5ff;
 }
 
-#modify:pressed, #rename:pressed {
+.button:pressed {
     -fx-background-color: #8c8cff;
+}
+
+.button:disabled {
+    -fx-background-color: #cecece;
 }
 
 .check-box .box {
     -fx-background-color: white;
     -fx-border-color:grey;
-    -fx-border-radius:3px;
+    -fx-border-radius:0;
 }
 
 .check-box:selected .mark {

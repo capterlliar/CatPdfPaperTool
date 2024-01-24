@@ -51,7 +51,6 @@ public class FileViewController extends BorderPane {
     }
 
     private void init() {
-        scrollPane.setFitToWidth(true);
         scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             if (event.getDeltaX() != 0) {
                 event.consume();

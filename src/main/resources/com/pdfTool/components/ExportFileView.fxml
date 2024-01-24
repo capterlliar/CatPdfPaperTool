@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import com.pdfTool.components.PageChooserController?>
+<fx:root type="VBox"
+         spacing="5"
+         stylesheets="@ExportFileView.css"
+         fx:id="exportFile"
+         xmlns:fx="http://javafx.com/fxml">
+    <GridPane hgap="5" vgap="5">
+        <!--first raw-->
+        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="导出路径："/>
+        <TextField GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="400"/>
+        <Button GridPane.rowIndex="0" GridPane.columnIndex="2">
+            <graphic>
+                <FontIcon iconLiteral="fa-folder-open-o"/>
+            </graphic>
+        </Button>
+        <!--second raw-->
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="导出文件名："/>
+        <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="400"/>
+    </GridPane>
+    <VBox fx:id="pageChooser" spacing="5">
+        <PageChooserController/>
+    </VBox>
+    <HBox>
+        <Button onAction="#addPage" text="添加页码">
+            <graphic>
+                <FontIcon iconLiteral="fa-plus-square"/>
+            </graphic>
+        </Button>
+        <HBox HBox.hgrow="ALWAYS"></HBox>
+        <Button onAction="#export" text="导出">
+            <graphic>
+                <FontIcon iconLiteral="fa-reply-all"/>
+            </graphic>
+        </Button>
+    </HBox>
+</fx:root>
