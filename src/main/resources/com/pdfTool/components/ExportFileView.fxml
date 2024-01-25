@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import com.pdfTool.components.PageChooserController?>
 <fx:root type="VBox"
          spacing="5"
          stylesheets="@ExportFileView.css"
@@ -12,7 +11,7 @@
     <GridPane hgap="5" vgap="5">
         <!--first raw-->
         <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="导出路径："/>
-        <TextField GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="400"/>
+        <TextField GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="450"/>
         <Button GridPane.rowIndex="0" GridPane.columnIndex="2">
             <graphic>
                 <FontIcon iconLiteral="fa-folder-open-o"/>
@@ -20,18 +19,27 @@
         </Button>
         <!--second raw-->
         <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="导出文件名："/>
-        <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="400"/>
+        <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="450"/>
     </GridPane>
-    <VBox fx:id="pageChooser" spacing="5">
-        <PageChooserController/>
-    </VBox>
+    <Label text="*选择导出页码，用英文逗号分割，如：1,2-3,5-10,12"/>
     <HBox>
-        <Button onAction="#addPage" text="添加页码">
+        <Label text="*不填写则默认全部导出"/>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label text="导出为多个文件"/>
+    </HBox>
+    <VBox fx:id="pageChooser" spacing="5"></VBox>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label text="将所有所选内容导出到一个文件  "/>
+        <CheckBox/>
+    </HBox>
+    <HBox>
+        <Button onAction="#addFile" text="添加文件">
             <graphic>
                 <FontIcon iconLiteral="fa-plus-square"/>
             </graphic>
         </Button>
-        <HBox HBox.hgrow="ALWAYS"></HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
         <Button onAction="#export" text="导出">
             <graphic>
                 <FontIcon iconLiteral="fa-reply-all"/>

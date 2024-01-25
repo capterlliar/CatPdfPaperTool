@@ -1,16 +1,17 @@
 package com.pdfTool;
 
-import com.pdfTool.components.SingleFileViewController;
+import com.pdfTool.components.SingleFileItemController;
 import com.pdfTool.defination.Paper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -27,8 +28,16 @@ public class FileViewController extends BorderPane {
         if(rootNode==null) {
             pathToId = new HashMap<>();
 
+
+            HBox space = new HBox();
+            HBox.setHgrow(space, Priority.ALWAYS);
+            Button clear = new Button("清空列表");
+            clear.setOnMouseClicked(e -> this.clearAll());
+            clear.setStyle("-fx-padding: 0 5");
+
             HBox hBox = new HBox();
-            hBox.getChildren().add(new Text("所有论文"));
+            hBox.getChildren().addAll(new Text("所有论文"), space, clear);
+
             rootNode = new TreeItem<>(hBox);
             rootNode.setExpanded(true);
 
@@ -43,7 +52,7 @@ public class FileViewController extends BorderPane {
                 continue;
             paper.setId(cnt++);
             pathToId.put(paper.getPath(),paper.getId());
-            SingleFileViewController content = new SingleFileViewController(paper.getFilename());
+            SingleFileItemController content = new SingleFileItemController(paper.getFilename());
             content.getTextArea().prefWidthProperty().bind(this.widthProperty().add(-170));
             TreeItem<HBox> node = new TreeItem<>(content);
             rootNode.getChildren().add(node);
@@ -70,6 +79,10 @@ public class FileViewController extends BorderPane {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    protected void clearAll() {
+
     }
 
     private void test(){

@@ -5,18 +5,19 @@
 <?import javafx.scene.control.Label?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.HBox?>
 <fx:root type="GridPane"
-         hgap="2"
+         hgap="5"
          stylesheets="@PageChooser.css"
          xmlns:fx="http://javafx.com/fxml">
-    <TextField fx:id="tf1" prefWidth="60" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <Label text="页" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-    <Label text="到" style="-fx-padding: 0 5 0 5" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-    <TextField fx:id="tf2" prefWidth="60" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-    <Label text="页" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
-    <Button GridPane.rowIndex="0" GridPane.columnIndex="5">
+    <Button GridPane.rowIndex="0" GridPane.columnIndex="0">
         <graphic>
             <FontIcon iconLiteral="fa-minus-square"/>
         </graphic>
     </Button>
+    <Label text="页数" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+    <TextField fx:id="textField" prefWidth="150" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+    <HBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+    <CheckBox GridPane.rowIndex="0" GridPane.columnIndex="5"/>
 </fx:root>

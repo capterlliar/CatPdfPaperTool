@@ -2,12 +2,11 @@ package com.pdfTool.components;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
 
-public class SingleFileViewController extends HBox {
+public class SingleFileItemController extends HBox {
     @FXML
     @Getter
     TextArea textArea;
@@ -16,8 +15,8 @@ public class SingleFileViewController extends HBox {
     private void init(String filename) {
         this.textArea.setText(filename);
     }
-    public SingleFileViewController(String filename) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SingleFileView.fxml"));
+    public SingleFileItemController(String filename) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SingleFileItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

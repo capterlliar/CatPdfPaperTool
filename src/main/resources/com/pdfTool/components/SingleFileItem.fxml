@@ -8,7 +8,7 @@
 <fx:root type="HBox"
          spacing="5"
          fx:id="singleFileViewer"
-         stylesheets="@SingleFileView.css"
+         stylesheets="@SingleFileItem.css"
          xmlns:fx="http://javafx.com/fxml">
     <CheckBox fx:id="checkBox"></CheckBox>
     <TextArea prefWidth="200" wrapText="true" prefRowCount="3" fx:id="textArea"/>

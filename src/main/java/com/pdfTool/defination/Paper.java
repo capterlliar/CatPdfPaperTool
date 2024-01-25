@@ -21,4 +21,8 @@ public class Paper {
         this.newname=null;
         this.alternatives=null;
     }
+
+    public String getDisplayedName() {
+        return newname == null ? filename : newname;
+    }
 }
