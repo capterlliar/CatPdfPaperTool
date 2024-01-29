@@ -10,7 +10,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FileConfirmViewController extends VBox {
-    ExportType exportType;
     Stage stage;
     public void show() {
         Scene scene = new Scene(this);
@@ -21,23 +20,21 @@ public class FileConfirmViewController extends VBox {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/pdfTool/images/cat.png")));
         }
-        stage.setTitle(this.exportType.getWindowName());
+        stage.setTitle("合并所选项");
         stage.setScene(scene);
         stage.show();
     }
-    private void init(ExportType type) {
-        this.exportType = type;
-
+    private void init() {
         this.setOnMouseClicked(e -> this.requestFocus());
     }
-    public FileConfirmViewController(ExportType type) {
+    public FileConfirmViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FileConfirmView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
         try {
             fxmlLoader.load();
-            init(type);
+            init();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }

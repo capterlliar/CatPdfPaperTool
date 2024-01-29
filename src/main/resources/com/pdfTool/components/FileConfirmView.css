@@ -1,0 +1,15 @@
+.button {
+    -fx-background-color: transparent;
+}
+
+.button:hover {
+    -fx-background-color: #c5c5ff;
+}
+
+.button:pressed {
+    -fx-background-color: #8c8cff;
+}
+
+#mergeFile {
+    -fx-padding: 10;
+}

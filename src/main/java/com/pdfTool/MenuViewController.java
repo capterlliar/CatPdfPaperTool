@@ -1,6 +1,7 @@
 package com.pdfTool;
 
 import com.pdfTool.components.ExportFileViewController;
+import com.pdfTool.components.FileConfirmViewController;
 import com.pdfTool.defination.ExportType;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.FileUtil;
@@ -34,7 +35,8 @@ public class MenuViewController extends HBox {
 
     @FXML
     protected void mergePDF(){
-        System.out.println("clicked.");
+        FileConfirmViewController merge = new FileConfirmViewController();
+        merge.show();
     }
 
     @FXML

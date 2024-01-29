@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<fx:root type="VBox"
+         stylesheets="@FileConfirmView.css"
+         fx:id="mergeFile"
+         xmlns:fx="http://javafx.com/fxml">
+    <GridPane hgap="5" vgap="5">
+        <!--first raw-->
+        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="导出路径："/>
+        <TextField GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="450"/>
+        <Button GridPane.rowIndex="0" GridPane.columnIndex="2">
+            <graphic>
+                <FontIcon iconLiteral="fa-folder-open-o"/>
+            </graphic>
+        </Button>
+        <!--second raw-->
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="导出文件名："/>
+        <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="450"/>
+    </GridPane>
+    <Label text="请确认合并文件列表："/>
+    <VBox fx:id="fileContainer" spacing="5">
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.pdfTool.components.FileConfirmList"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+    </VBox>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Button onAction="#merge" text="导出">
+            <graphic>
+                <FontIcon iconLiteral="fa-reply-all"/>
+            </graphic>
+        </Button>
+    </HBox>
+</fx:root>
