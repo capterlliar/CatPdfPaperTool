@@ -1,4 +1,4 @@
 package com.pdfTool.utils;
 
-public class PDFUtil {
+public final class PDFUtil {
 }

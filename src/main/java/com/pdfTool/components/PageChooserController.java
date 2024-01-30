@@ -30,4 +30,5 @@ public class PageChooserController extends GridPane {
     }
 
 //    public Pair<Integer, Integer> getPageRange() {}
+    //TODO:字符校验
 }

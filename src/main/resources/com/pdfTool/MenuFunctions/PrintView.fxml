@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.text.Text?>
+<?import com.pdfTool.components.FileListController?>
+<fx:root type="VBox"
+         stylesheets="@MergeFileView.css"
+         fx:id="mergeFile"
+         spacing="5"
+         xmlns:fx="http://javafx.com/fxml">
+    <VBox spacing="5">
+        <Text text="选择打印机："/>
+        <ChoiceBox prefWidth="400"/>
+        <HBox>
+            <CheckBox text="双面打印"/>
+            <HBox HBox.hgrow="ALWAYS"/>
+            <Text text="份数："/>
+            <TextField prefWidth="50"/>
+        </HBox>
+    </VBox>
+
+    <Separator/>
+
+    <FileListController fx:id="fileList"/>
+
+    <HBox>
+        <Button onAction="#addFile" text="添加文件">
+            <graphic>
+                <FontIcon iconLiteral="fa-plus-square"/>
+            </graphic>
+        </Button>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Button onAction="#print" text="打印">
+            <graphic>
+                <FontIcon iconLiteral="fa-print"/>
+            </graphic>
+        </Button>
+    </HBox>
+</fx:root>

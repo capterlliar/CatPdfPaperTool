@@ -2,6 +2,7 @@ package com.pdfTool;
 
 import com.pdfTool.MenuFunctions.ExportFileViewController;
 import com.pdfTool.MenuFunctions.MergeFileViewController;
+import com.pdfTool.MenuFunctions.PrintViewController;
 import com.pdfTool.defination.ExportType;
 import com.pdfTool.utils.FileChooserUtil;
 import javafx.fxml.FXML;
@@ -45,7 +46,8 @@ public class MenuViewController extends HBox {
 
     @FXML
     protected void print(){
-        System.out.println("clicked.");
+        PrintViewController printFile = new PrintViewController();
+        printFile.show();
     }
 
     @FXML

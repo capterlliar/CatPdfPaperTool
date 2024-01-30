@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.List;
 
-public class MergeFileViewController extends VBox {
+public class PrintViewController extends VBox {
     @FXML
     FileListController fileList;
     Stage stage;
@@ -25,18 +25,19 @@ public class MergeFileViewController extends VBox {
         if(stage==null) {
             stage = new Stage();
             stage.initOwner(this.getScene().getWindow());
+            stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/pdfTool/images/cat.png")));
         }
-        stage.setTitle("合并所选项");
+        stage.setTitle("打印所选项");
         stage.setScene(scene);
         stage.show();
     }
-    private void init() {
+    protected void init() {
         this.setOnMouseClicked(e -> this.requestFocus());
     }
-    public MergeFileViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MergeFileView.fxml"));
+    public PrintViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PrintView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -49,7 +50,7 @@ public class MergeFileViewController extends VBox {
     }
 
     @FXML
-    protected void merge() {
+    protected void print() {
 
     }
 

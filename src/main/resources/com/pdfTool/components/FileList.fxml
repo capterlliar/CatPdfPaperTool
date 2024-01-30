@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<fx:root type="VBox"
+         stylesheets="@FileList.css"
+         xmlns:fx="http://javafx.com/fxml">
+    <Label text="请确认合并文件列表："/>
+    <ScrollPane fitToWidth="true" prefHeight="200">
+        <VBox fx:id="fileContainer" spacing="5">
+
+        </VBox>
+    </ScrollPane>
+    <Label fx:id="cnt" text="共0个文件"/>
+</fx:root>

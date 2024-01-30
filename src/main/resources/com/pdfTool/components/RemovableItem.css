@@ -1,0 +1,5 @@
+#removableItem {
+    -fx-border-color: #cbcbcb;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 2;
+}
