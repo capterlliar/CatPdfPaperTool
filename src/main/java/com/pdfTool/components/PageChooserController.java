@@ -11,9 +11,10 @@ public class PageChooserController extends GridPane {
     TextField textField;
     private void init(String fileName) {
         Label label = new Label(fileName);
-        label.setPrefWidth(300);
         label.setStyle("-fx-text-overrun: ellipsis;");
-        this.add(label, 1,0);
+        label.prefWidthProperty().bind(this.widthProperty().add(-100));
+        GridPane.isFillWidth(label);
+        this.add(label, 0,0);
     }
     public PageChooserController(String fileName) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PageChooser.fxml"));

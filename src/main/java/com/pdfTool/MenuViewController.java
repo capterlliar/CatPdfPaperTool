@@ -1,14 +1,12 @@
 package com.pdfTool;
 
-import com.pdfTool.components.ExportFileViewController;
-import com.pdfTool.components.FileConfirmViewController;
+import com.pdfTool.MenuFunctions.ExportFileViewController;
+import com.pdfTool.MenuFunctions.MergeFileViewController;
 import com.pdfTool.defination.ExportType;
 import com.pdfTool.utils.FileChooserUtil;
-import com.pdfTool.utils.FileUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +33,7 @@ public class MenuViewController extends HBox {
 
     @FXML
     protected void mergePDF(){
-        FileConfirmViewController merge = new FileConfirmViewController();
+        MergeFileViewController merge = new MergeFileViewController();
         merge.show();
     }
 

@@ -1,5 +1,7 @@
-package com.pdfTool.components;
+package com.pdfTool.MenuFunctions;
 
+import com.pdfTool.components.PageChooserController;
+import com.pdfTool.components.RemovableItemController;
 import com.pdfTool.defination.ExportType;
 import com.pdfTool.defination.Paper;
 import com.pdfTool.utils.FileChooserUtil;
@@ -15,7 +17,8 @@ import java.io.File;
 import java.util.List;
 
 public class ExportFileViewController extends VBox {
-    @FXML VBox pageChooser;
+    @FXML
+    VBox pageChooser;
     ExportType exportType;
     Stage stage;
     public void show() {
@@ -32,8 +35,12 @@ public class ExportFileViewController extends VBox {
         stage.show();
     }
     public void addFile(List<Paper> papers){
-        papers.forEach(paper ->
-                this.pageChooser.getChildren().add(new PageChooserController(paper.getDisplayedName())));
+        papers.forEach(paper -> {
+            PageChooserController pageChooser = new PageChooserController(paper.getDisplayedName());
+            RemovableItemController item = new RemovableItemController(this.pageChooser, pageChooser);
+            pageChooser.prefWidthProperty().bind(item.widthProperty());
+            this.pageChooser.getChildren().add(item);
+        });
     }
     private void init(ExportType type) {
         this.exportType = type;
@@ -56,7 +63,10 @@ public class ExportFileViewController extends VBox {
         List<File> files = FileChooserUtil.getFiles(this.getScene().getWindow());
         if(files==null) return;
         files.forEach(file -> {
-            this.pageChooser.getChildren().add(new PageChooserController(file.getName()));
+            PageChooserController pageChooser = new PageChooserController(file.getName());
+            RemovableItemController item = new RemovableItemController(this.pageChooser, pageChooser);
+            pageChooser.prefWidthProperty().bind(item.widthProperty().add(-50));
+            this.pageChooser.getChildren().add(item);
             stage.sizeToScene();
         });
     }

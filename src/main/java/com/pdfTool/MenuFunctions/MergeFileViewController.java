@@ -1,16 +1,23 @@
-package com.pdfTool.components;
+package com.pdfTool.MenuFunctions;
 
-import com.pdfTool.defination.ExportType;
+import com.pdfTool.components.RemovableItemController;
+import com.pdfTool.utils.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class FileConfirmViewController extends VBox {
+import java.io.File;
+import java.util.List;
+
+public class MergeFileViewController extends VBox {
+    @FXML VBox fileContainer;
     Stage stage;
+    int fileNum=0;
     public void show() {
         Scene scene = new Scene(this);
 
@@ -27,8 +34,8 @@ public class FileConfirmViewController extends VBox {
     private void init() {
         this.setOnMouseClicked(e -> this.requestFocus());
     }
-    public FileConfirmViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FileConfirmView.fxml"));
+    public MergeFileViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MergeFileView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -43,5 +50,20 @@ public class FileConfirmViewController extends VBox {
     @FXML
     protected void merge() {
 
+    }
+
+    @FXML
+    protected void addFile() {
+        List<File> files = FileChooserUtil.getFiles(this.getScene().getWindow());
+        if(files==null) return;
+
+        files.forEach(file -> {
+            fileNum++;
+            Label label = new Label(fileNum+".  "+file.getName());
+            label.setStyle("-fx-text-overrun: ellipsis;");
+            RemovableItemController item = new RemovableItemController(this.fileContainer, label);
+            this.fileContainer.getChildren().add(item);
+            stage.sizeToScene();
+        });
     }
 }

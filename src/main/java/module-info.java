@@ -13,4 +13,6 @@ module com.pdfTool {
     exports com.pdfTool.utils;
     exports com.pdfTool.defination;
     exports com.pdfTool.components;
+    exports com.pdfTool.MenuFunctions;
+    opens com.pdfTool.MenuFunctions to javafx.fxml;
 }

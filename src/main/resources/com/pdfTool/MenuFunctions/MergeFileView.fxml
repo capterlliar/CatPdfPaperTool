@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <fx:root type="VBox"
+         stylesheets="@MergeFileView.css"
+         fx:id="mergeFile"
          spacing="5"
-         stylesheets="@ExportFileView.css"
-         fx:id="exportFile"
          xmlns:fx="http://javafx.com/fxml">
     <GridPane hgap="5" vgap="5">
         <!--first raw-->
@@ -21,18 +21,12 @@
         <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="导出文件名："/>
         <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="450"/>
     </GridPane>
-    <Label text="*选择导出页码，用英文逗号分割，如：1,2-3,5-10,12"/>
-    <HBox>
-        <Label text="*不填写则默认全部导出"/>
-        <HBox HBox.hgrow="ALWAYS"/>
-        <Label text="导出为多个文件"/>
-    </HBox>
-    <VBox fx:id="pageChooser" spacing="5"></VBox>
-    <HBox>
-        <HBox HBox.hgrow="ALWAYS"/>
-        <Label text="将所有所选内容导出到一个文件  "/>
-        <CheckBox/>
-    </HBox>
+    <Label text="请确认合并文件列表："/>
+    <ScrollPane fitToWidth="true" prefHeight="200">
+        <VBox fx:id="fileContainer" spacing="5">
+
+        </VBox>
+    </ScrollPane>
     <HBox>
         <Button onAction="#addFile" text="添加文件">
             <graphic>
@@ -40,7 +34,7 @@
             </graphic>
         </Button>
         <HBox HBox.hgrow="ALWAYS"/>
-        <Button onAction="#export" text="导出">
+        <Button onAction="#merge" text="导出">
             <graphic>
                 <FontIcon iconLiteral="fa-reply-all"/>
             </graphic>
