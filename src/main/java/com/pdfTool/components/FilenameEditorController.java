@@ -6,7 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
 
-public class SingleFileItemController extends HBox {
+public class FilenameEditorController extends HBox {
     @FXML
     @Getter
     TextArea textArea;
@@ -15,8 +15,8 @@ public class SingleFileItemController extends HBox {
     private void init(String filename) {
         this.textArea.setText(filename);
     }
-    public SingleFileItemController(String filename) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SingleFileItem.fxml"));
+    public FilenameEditorController(String filename) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameEditor.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

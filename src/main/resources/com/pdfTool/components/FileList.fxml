@@ -6,7 +6,7 @@
 <fx:root type="VBox"
          stylesheets="@FileList.css"
          xmlns:fx="http://javafx.com/fxml">
-    <Label text="请确认合并文件列表："/>
+    <Label text="请确认文件列表："/>
     <ScrollPane fitToWidth="true" prefHeight="200">
         <VBox fx:id="fileContainer" spacing="5">
 

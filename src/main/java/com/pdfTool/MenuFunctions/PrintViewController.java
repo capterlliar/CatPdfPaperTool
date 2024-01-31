@@ -1,12 +1,10 @@
 package com.pdfTool.MenuFunctions;
 
 import com.pdfTool.components.FileListController;
-import com.pdfTool.components.RemovableItemController;
 import com.pdfTool.utils.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;

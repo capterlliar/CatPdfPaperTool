@@ -1,6 +1,6 @@
 package com.pdfTool;
 
-import com.pdfTool.components.SingleFileItemController;
+import com.pdfTool.components.FilenameEditorController;
 import com.pdfTool.defination.Paper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +52,7 @@ public class FileViewController extends BorderPane {
                 continue;
             paper.setId(cnt++);
             pathToId.put(paper.getPath(),paper.getId());
-            SingleFileItemController content = new SingleFileItemController(paper.getFilename());
+            FilenameEditorController content = new FilenameEditorController(paper.getFilename());
             content.getTextArea().prefWidthProperty().bind(this.widthProperty().add(-170));
             TreeItem<HBox> node = new TreeItem<>(content);
             rootNode.getChildren().add(node);

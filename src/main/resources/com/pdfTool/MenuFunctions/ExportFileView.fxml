@@ -11,8 +11,8 @@
     <GridPane hgap="5" vgap="5">
         <!--first raw-->
         <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="导出路径："/>
-        <TextField GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="450"/>
-        <Button GridPane.rowIndex="0" GridPane.columnIndex="2">
+        <TextField fx:id="folderName" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="450"/>
+        <Button onAction="#openDirectory" GridPane.rowIndex="0" GridPane.columnIndex="2">
             <graphic>
                 <FontIcon iconLiteral="fa-folder-open-o"/>
             </graphic>

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -18,6 +19,8 @@ import java.util.List;
 public class MergeFileViewController extends VBox {
     @FXML
     FileListController fileList;
+    @FXML
+    TextField folderName;
     Stage stage;
     public void show() {
         Scene scene = new Scene(this);
@@ -59,5 +62,12 @@ public class MergeFileViewController extends VBox {
         if(files==null) return;
         fileList.addFile(files.stream().map(File::getName).toList());
         stage.sizeToScene();
+    }
+
+    @FXML
+    protected void openDirectory() {
+        File dir = FileChooserUtil.getDirectory(this.getScene().getWindow());
+        if(dir==null) return;
+        this.folderName.setText(dir.getPath());
     }
 }

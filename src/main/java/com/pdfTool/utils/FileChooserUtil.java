@@ -1,5 +1,6 @@
 package com.pdfTool.utils;
 
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 public final class FileChooserUtil {
     private static String initialDir = System.getProperty("user.home");
+    private static DirectoryChooser directoryChooser = null;
     private static FileChooser fileChooser = null;
 
     static {
@@ -15,6 +17,7 @@ public final class FileChooserUtil {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("PDF", "*.pdf")
         );
+        directoryChooser = new DirectoryChooser();
     }
 
     public static List<File> getFiles(Window window) {
@@ -24,5 +27,14 @@ public final class FileChooserUtil {
             initialDir = FileUtil.getFileDirectory(files.get(0));
         }
         return files;
+    }
+
+    public static File getDirectory(Window window) {
+        directoryChooser.setInitialDirectory(new File(initialDir));
+        File dir = directoryChooser.showDialog(window);
+        if(dir!=null) {
+            initialDir = dir.getPath();
+        }
+        return dir;
     }
 }

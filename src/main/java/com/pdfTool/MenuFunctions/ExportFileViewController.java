@@ -8,6 +8,7 @@ import com.pdfTool.utils.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -19,6 +20,8 @@ import java.util.List;
 public class ExportFileViewController extends VBox {
     @FXML
     VBox pageChooser;
+    @FXML
+    TextField folderName;
     ExportType exportType;
     Stage stage;
     public void show() {
@@ -73,5 +76,12 @@ public class ExportFileViewController extends VBox {
     @FXML
     protected void export() {
 
+    }
+
+    @FXML
+    protected void openDirectory() {
+        File dir = FileChooserUtil.getDirectory(this.getScene().getWindow());
+        if(dir==null) return;
+        this.folderName.setText(dir.getPath());
     }
 }
