@@ -3,7 +3,8 @@ package com.pdfTool.defination;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.util.List;
 
 public class Paper {
     @Getter
@@ -13,13 +14,17 @@ public class Paper {
     String path;
     @Getter
     String filename;
+    @Setter
+    @Getter
     String newname;
-    ArrayList<String> alternatives;
+    @Setter
+    @Getter
+    List<String> options;
     public Paper(String path, String filename) {
         this.path=path;
         this.filename=filename;
         this.newname=null;
-        this.alternatives=null;
+        this.options=null;
     }
 
     public String getDisplayedName() {

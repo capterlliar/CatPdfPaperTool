@@ -19,12 +19,12 @@
             </left>
             <right>
                 <HBox spacing="10">
-                    <Button fx:id="modify" text="修改所选论文标题">
+                    <Button fx:id="modify" onAction="#modify" text="自动提取所选论文标题">
                         <graphic>
                             <FontIcon iconLiteral="fa-paper-plane"/>
                         </graphic>
                     </Button>
-                    <Button fx:id="rename" text="确认" disable="true">
+                    <Button fx:id="rename" onAction="#rename" text="重命名">
                         <graphic>
                             <FontIcon iconLiteral="fa-check"/>
                         </graphic>

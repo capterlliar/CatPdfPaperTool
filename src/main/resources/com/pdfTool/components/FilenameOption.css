@@ -1,0 +1,45 @@
+.scroll-bar:vertical .track{
+    -fx-background-color: #ffffff;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius:2em;
+}
+
+/*竖向滚动条增减按钮样式*/
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 10 0 0;
+}
+
+/*增减按钮中图标样式*/
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color:transparent;
+    -fx-shape: " ";
+    -fx-padding:0;
+}
+
+/*滚动条滑块样式*/
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #e7e7e7;
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+.text-area {
+    -fx-background-insets: 0;
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #e7e7e7;
+}
+
+.text-area .content {
+    -fx-background-color: white;
+}
+
+#value {
+    -fx-padding: 0 0 0 10;
+}

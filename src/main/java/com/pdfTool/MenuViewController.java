@@ -5,6 +5,7 @@ import com.pdfTool.MenuFunctions.MergeFileViewController;
 import com.pdfTool.MenuFunctions.PrintViewController;
 import com.pdfTool.defination.ExportType;
 import com.pdfTool.utils.FileChooserUtil;
+import com.pdfTool.utils.FileUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
@@ -30,6 +31,7 @@ public class MenuViewController extends HBox {
     protected void importPaper(){
         List<File> files = FileChooserUtil.getFiles(this.getScene().getWindow());
         if(files==null) return;
+        FileViewController.getInstance().loadPaper(FileUtil.filesToPapers(files));
     }
 
     @FXML
