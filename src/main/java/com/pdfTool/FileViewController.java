@@ -2,10 +2,6 @@ package com.pdfTool;
 
 import com.pdfTool.components.FilenameEditorController;
 import com.pdfTool.defination.Paper;
-import com.pdfTool.utils.FileUtil;
-import com.pdfTool.utils.PDFUtil;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -14,12 +10,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
 
 import java.io.File;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /*
@@ -39,18 +33,18 @@ public class FileViewController extends BorderPane {
     @FXML
     CheckBox checkBox;
     TreeItem<HBox> rootNode = null;
-    HashMap<String, Integer> pathToId = null;
+    HashSet<File> files;
     Integer cnt=0;
 
     public void loadPaper(List<Paper> papers) {
         for(Paper paper:papers){
             // Prevent duplicated paper.
-            if(pathToId.containsKey(paper.getPath()))
+            if(files.contains(paper.getFile()))
                 continue;
-            pathToId.put(paper.getPath(),paper.getId());
+            files.add(paper.getFile());
 
             paper.setId(cnt++);
-            FilenameEditorController content = new FilenameEditorController(paper, rootNode);
+            FilenameEditorController content = new FilenameEditorController(paper, this);
             rootNode.getChildren().add(content);
         }
     }
@@ -59,7 +53,7 @@ public class FileViewController extends BorderPane {
         INSTANCE = this;
         // To initialize treeView.
         if(rootNode==null) {
-            pathToId = new HashMap<>();
+            files = new HashSet<>();
 
             HBox space = new HBox();
             HBox.setHgrow(space, Priority.ALWAYS);
@@ -92,6 +86,22 @@ public class FileViewController extends BorderPane {
         });
     }
 
+    public List<FilenameEditorController> getSelectedNodes() {
+        return  this.rootNode.getChildren().stream()
+                .filter(node -> ((FilenameEditorController)node).selected())
+                .map(node -> ((FilenameEditorController)node)).toList();
+
+    }
+
+    public void remove(FilenameEditorController child) {
+        this.rootNode.getChildren().remove(child);
+        this.files.remove(child.exportExistingFile());
+    }
+
+    public List<File> exportSelectedFiles() {
+        return this.getSelectedNodes().stream().map(FilenameEditorController::exportExistingFile).toList();
+    }
+
     public FileViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/FileView.fxml"));
         fxmlLoader.setRoot(this);
@@ -100,7 +110,6 @@ public class FileViewController extends BorderPane {
         try {
             fxmlLoader.load();
             init();
-            test();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
@@ -108,43 +117,21 @@ public class FileViewController extends BorderPane {
 
     protected void clearAll() {
         this.rootNode.getChildren().removeAll(this.rootNode.getChildren());
+        this.files.clear();
     }
+
 
     @FXML
     protected void modify() {
-        List<FilenameEditorController> selectedNodes = new ArrayList<>();
-        this.rootNode.getChildren().forEach(node -> {
-            if(((FilenameEditorController) node).selected()) {
-                selectedNodes.add(((FilenameEditorController) node));
-            }
-        });
-        if(selectedNodes.isEmpty()) return;
-        selectedNodes.forEach(node -> {
-            PDFUtil.setNewName(node.getPaper());
-            node.apply();
-        });
+        this.getSelectedNodes().forEach(FilenameEditorController::modify);
     }
 
     @FXML
     protected void rename() {
-        this.rootNode.getChildren().forEach(node -> {
-            if(((FilenameEditorController) node).selected()) {
-                boolean renamed = FileUtil.rename(((FilenameEditorController) node).export());
-                if(renamed) {
-                    ((FilenameEditorController) node).select(false);
-                }
-                else {
-                    //TODO:重命名失败警告弹窗
-                }
-            }
+        this.getSelectedNodes().forEach(node -> {
+            this.files.remove(node.exportExistingFile());
+            node.rename();
+            this.files.add(node.exportExistingFile());
         });
-    }
-
-    private void test(){
-        ArrayList<Paper>arrayList  = new ArrayList<>();
-        arrayList.add(new Paper("test1","ARM-Net: Attention-guided residual multiscale CNN for multiclass brain tumor classification using MR images"));
-        arrayList.add(new Paper("test2","Reinforcement learning for question answering in programming domain using public community scoring as a human feedback"));
-        arrayList.add(new Paper("test3","Data-driven grapheme-to-phoneme representations for a lexicon-free text-to-speech"));
-        loadPaper(arrayList);
     }
 }

@@ -37,12 +37,14 @@ public class MenuViewController extends HBox {
     @FXML
     protected void mergePDF(){
         MergeFileViewController merge = new MergeFileViewController();
+        merge.addFile(FileViewController.getInstance().exportSelectedFiles());
         merge.show();
     }
 
     @FXML
     protected void splitPDF(){
         ExportFileViewController splitFile = new ExportFileViewController(ExportType.SPLIT);
+        splitFile.addFile(FileViewController.getInstance().exportSelectedFiles());
         splitFile.show();
     }
 

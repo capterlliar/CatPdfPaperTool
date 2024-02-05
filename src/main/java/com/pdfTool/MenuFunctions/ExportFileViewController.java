@@ -37,9 +37,9 @@ public class ExportFileViewController extends VBox {
         stage.setScene(scene);
         stage.show();
     }
-    public void addFile(List<Paper> papers){
-        papers.forEach(paper -> {
-            PageChooserController pageChooser = new PageChooserController(paper.getDisplayedName());
+    public void addFile(List<File> files){
+        files.forEach(file -> {
+            PageChooserController pageChooser = new PageChooserController(file.getName());
             RemovableItemController item = new RemovableItemController(this.pageChooser, pageChooser);
             pageChooser.prefWidthProperty().bind(item.widthProperty());
             this.pageChooser.getChildren().add(item);

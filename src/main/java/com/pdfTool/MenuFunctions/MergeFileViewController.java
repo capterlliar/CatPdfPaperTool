@@ -1,12 +1,10 @@
 package com.pdfTool.MenuFunctions;
 
 import com.pdfTool.components.FileListController;
-import com.pdfTool.components.RemovableItemController;
 import com.pdfTool.utils.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -35,6 +33,10 @@ public class MergeFileViewController extends VBox {
         stage.setScene(scene);
         stage.show();
     }
+    public void addFile(List<File> files) {
+        if(files==null) return;
+        this.fileList.addFile(files.stream().map(File::getName).toList());
+    }
     private void init() {
         this.setOnMouseClicked(e -> this.requestFocus());
     }
@@ -60,7 +62,7 @@ public class MergeFileViewController extends VBox {
     protected void addFile() {
         List<File> files = FileChooserUtil.getFiles(this.getScene().getWindow());
         if(files==null) return;
-        fileList.addFile(files.stream().map(File::getName).toList());
+        this.fileList.addFile(files.stream().map(File::getName).toList());
         stage.sizeToScene();
     }
 

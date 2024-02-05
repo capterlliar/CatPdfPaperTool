@@ -11,23 +11,13 @@ public class Paper {
     @Setter
     int id;
     @Getter
-    String path;
-    @Getter
-    String filename;
     @Setter
-    @Getter
-    String newname;
+    File file;
     @Setter
     @Getter
     List<String> options;
-    public Paper(String path, String filename) {
-        this.path=path;
-        this.filename=filename;
-        this.newname=null;
-        this.options=null;
-    }
-
-    public String getDisplayedName() {
-        return newname == null ? filename : newname;
+    public Paper(File file) {
+        this.file = file;
+        this.options = null;
     }
 }

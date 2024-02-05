@@ -1,15 +1,15 @@
 package com.pdfTool.components;
 
+import com.pdfTool.FileViewController;
 import com.pdfTool.defination.Paper;
 import com.pdfTool.utils.FileUtil;
+import com.pdfTool.utils.PDFUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
-import javafx.util.Pair;
-import lombok.Getter;
 
 import java.io.File;
 import java.util.List;
@@ -21,9 +21,8 @@ public class FilenameEditorController extends TreeItem<HBox> {
     HBox value;
     @FXML
     CheckBox checkBox;
-    @Getter
     Paper paper;
-    TreeItem<HBox> parent;
+    FileViewController parent;
     public String getText() {
         return this.textArea.getText();
     }
@@ -40,28 +39,51 @@ public class FilenameEditorController extends TreeItem<HBox> {
         this.setText(text);
         this.setExpanded(false);
     }
-    public void apply() {
-        this.setText(this.paper.getNewname());
+    public String getNewPath() {
+        return FileUtil.getFileDirectory(paper.getFile())+File.separator+this.getText();
+    }
+    public File exportNewFile() {
+        return new File(this.getNewPath());
+    }
+
+    public File exportExistingFile() {
+        return this.paper.getFile();
+    }
+
+    public void rename() {
+        File newFile = this.exportNewFile();
+        boolean renamed = FileUtil.rename(this.exportExistingFile(), newFile);
+        if(renamed) {
+            this.select(false);
+            this.paper.setFile(newFile);
+        }
+        else {
+            //TODO:重命名失败警告
+        }
+    }
+
+    public void modify() {
         this.getChildren().removeAll(this.getChildren());
+        PDFUtil.setNewName(this.paper);
+
         List<String> options = this.paper.getOptions();
         if (options != null) {
-            options.forEach(option ->
-                    this.getChildren().add(new FilenameOptionController(option, this)));
+            if(options.size() > 0) {
+                this.setText(options.get(0));
+                for(int i=1;i<options.size();i++){
+                    this.getChildren().add(new FilenameOptionController(options.get(i), this));
+                }
+            }
         }
         this.setExpanded(false);
     }
-    public Pair<File, File> export() {
-        return new Pair<>(new File(paper.getPath()),
-                new File(FileUtil.getDirectory(paper.getPath())+File.separator+this.getText()));
-    }
-
-    private void init(Paper paper, TreeItem<HBox> parent) {
+    private void init(Paper paper, FileViewController parent) {
         this.paper = paper;
         this.parent = parent;
-        this.setText(this.paper.getFilename());
+        this.setText(paper.getFile().getName());
         this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
     }
-    public FilenameEditorController(Paper paper, TreeItem<HBox> parent) {
+    public FilenameEditorController(Paper paper, FileViewController parent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameEditor.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -81,6 +103,6 @@ public class FilenameEditorController extends TreeItem<HBox> {
 
     @FXML
     protected void remove() {
-        this.parent.getChildren().remove(this);
+        this.parent.remove(this);
     }
 }
