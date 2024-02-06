@@ -40,7 +40,9 @@ public class FilenameEditorController extends TreeItem<HBox> {
         this.setExpanded(false);
     }
     public String getNewPath() {
-        return FileUtil.getFileDirectory(paper.getFile())+File.separator+this.getText();
+        String newPath = FileUtil.getFileDirectory(paper.getFile())+File.separator+this.getText();
+        if(!newPath.endsWith(".pdf")) newPath += ".pdf";
+        return newPath;
     }
     public File exportNewFile() {
         return new File(this.getNewPath());

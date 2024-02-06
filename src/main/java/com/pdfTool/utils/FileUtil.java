@@ -25,4 +25,21 @@ public final class FileUtil {
         }
         return false;
     }
+    public static boolean checkAndCreateDir(String dir) {
+        if(dir.trim().equals("")) return false;
+        File file = new File(dir);
+        if(!file.exists()) {
+            return file.mkdirs();
+        }
+        return true;
+    }
+
+    public static boolean isFileNameValid(String name){
+        if(name.trim().equals("")) return false;
+        if (name.length() > 255){
+            return false;
+        } else {
+            return name.matches("[^\\s\\\\/:\\*\\?\\\"<>\\|](\\x20|[^\\s\\\\/:\\*\\?\\\"<>\\|])*[^\\s\\\\/:\\*\\?\\\"<>\\|\\.]$");
+        }
+    }
 }

@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
 import java.util.List;
 
 public class FileListController extends VBox {
@@ -42,14 +43,19 @@ public class FileListController extends VBox {
         }
     }
 
-    public void addFile(List<String> files) {
+    public void addFile(List<File> files) {
         files.forEach(file -> {
-            Label label = new Label(file);
+            Label label = new Label(file.getName());
             label.setWrapText(true);
             label.prefWidthProperty().bind(this.fileContainer.widthProperty().add(-50));
             label.setStyle("-fx-text-overrun: ellipsis;");
-            RemovableItemController item = new RemovableItemController(this.fileContainer, label);
+            RemovableItemController item = new RemovableItemController(this.fileContainer, label, file);
             this.fileContainer.getChildren().add(item);
         });
+    }
+
+    public List<File> getFiles() {
+        return this.fileContainer.getChildren().stream()
+                .map(node -> ((RemovableItemController)node).getFile()).toList();
     }
 }

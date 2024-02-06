@@ -56,7 +56,7 @@ public class PrintViewController extends VBox {
     protected void addFile() {
         List<File> files = FileChooserUtil.getFiles(this.getScene().getWindow());
         if(files==null) return;
-        fileList.addFile(files.stream().map(File::getName).toList());
+        fileList.addFile(files);
         stage.sizeToScene();
     }
 }

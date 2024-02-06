@@ -6,6 +6,7 @@ module com.pdfTool {
     requires static lombok;
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
+    requires org.apache.pdfbox;
 
     opens com.pdfTool to javafx.fxml;
     opens com.pdfTool.components to javafx.fxml;
