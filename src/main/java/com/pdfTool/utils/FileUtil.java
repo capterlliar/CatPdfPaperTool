@@ -42,4 +42,20 @@ public final class FileUtil {
             return name.matches("[^\\s\\\\/:\\*\\?\\\"<>\\|](\\x20|[^\\s\\\\/:\\*\\?\\\"<>\\|])*[^\\s\\\\/:\\*\\?\\\"<>\\|\\.]$");
         }
     }
+
+    public static String getTempDir() {
+        return System.getProperty("");
+    }
+
+    public static String getUniqueFilename(String dest, String oldFilename) {
+        //Avoid duplicated filename.
+        //We do not choose uuid as filename to keep its readability.
+        String newFilename;
+        int cnt = 1;
+        while (new File(dest + "new" + cnt + " " + oldFilename).exists()) {
+            cnt++;
+        }
+        newFilename = dest + "new" + cnt + " " + oldFilename;
+        return newFilename;
+    }
 }

@@ -10,5 +10,5 @@
          xmlns:fx="http://javafx.com/fxml">
     <Text text="页数" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
     <TextField fx:id="textField" prefWidth="150" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-    <CheckBox GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+    <CheckBox fx:id="exportAsMutiFiles" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 </fx:root>

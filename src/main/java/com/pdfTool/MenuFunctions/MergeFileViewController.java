@@ -71,7 +71,6 @@ public class MergeFileViewController extends VBox {
         String filename = this.filename.getText();
         if(!FileUtil.isFileNameValid(filename)) {
             //TODO: 文件名不合法警告
-            System.out.println(2);
         }
         if(!filename.endsWith(".pdf")) filename += ".pdf";
         return filename;
