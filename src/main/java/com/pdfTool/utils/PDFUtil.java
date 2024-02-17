@@ -2,16 +2,22 @@ package com.pdfTool.utils;
 
 import com.pdfTool.defination.Paper;
 import javafx.util.Pair;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.graphics.PDXObject;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 public final class PDFUtil {
     private static Splitter splitter = null;
@@ -34,8 +40,7 @@ public final class PDFUtil {
         if(splitter == null) {
             splitter = new Splitter();
         }
-        String filename = file.getName();
-        filename = filename.substring(0, filename.length() - 4);
+        String filename = FileUtil.getPDFFilename(file);
 
         List<File> files = new ArrayList<>();
         PDDocument document = PDDocument.load(file);
@@ -57,5 +62,37 @@ public final class PDFUtil {
         }
         document.close();
         return files;
+    }
+
+    public static List<File> getImages(List<Pair<Integer, Integer>> pages, File file, String dest) throws IOException {
+        PDDocument document = PDDocument.load(file);
+        String filename = FileUtil.getPDFFilename(file);
+
+        if(pages.isEmpty()) {
+            int end = document.getNumberOfPages();
+            pages.add(new Pair<>(1, end));
+        }
+
+        List<File> images = new ArrayList<>();
+        for(Pair<Integer, Integer> pair:pages) {
+            int start = pair.getKey();
+            int end = pair.getValue();
+
+            for(int i=start;i<=end;i++) {
+                PDPage page = document.getPage(i-1);
+                PDResources resources = page.getResources();
+                int cnt = 1;
+                for (COSName xObjectName : resources.getXObjectNames()) {
+                    PDXObject xObject = resources.getXObject(xObjectName);
+                    if (xObject instanceof PDImageXObject) {
+                        File image = new File(dest + filename + start + "-" + end + "(" + cnt + ")" + ".png");
+                        ImageIO.write(((PDImageXObject)xObject).getImage(), "png", image);
+                        images.add(image);
+                    }
+                }
+            }
+        }
+        document.close();
+        return images;
     }
 }

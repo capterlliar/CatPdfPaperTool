@@ -66,11 +66,12 @@ public class PageChooserController extends GridPane {
     }
     public File export(String dest) throws IOException {
         List<Pair<Integer, Integer>> pages = this.getSelectedPages(this.getText());
-        if(pages.isEmpty()) return this.file;
 
         File res = null;
         switch (this.exportType) {
             case SPLIT -> {
+                if(pages.isEmpty()) return this.file;
+
                 List<File> files = PDFUtil.splitAsMutiFiles(pages, this.file, dest);
                 if(!this.exportAsMutiFiles()) {
                     String newFilename = FileUtil.getUniqueFilename(dest, this.file.getName());
@@ -83,7 +84,9 @@ public class PageChooserController extends GridPane {
 
             }
             case IMAGE -> {
-
+                //pages.isEmpty will be handled in the following function.
+                if(!this.exportAsMutiFiles()) dest = dest + FileUtil.getPDFFilename(this.file) + "/";
+                PDFUtil.getImages(pages, this.file, dest);
             }
         }
         return res;

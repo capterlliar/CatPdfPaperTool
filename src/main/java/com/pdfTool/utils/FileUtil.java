@@ -54,4 +54,10 @@ public final class FileUtil {
         newFilename = dest + "new" + cnt + " " + oldFilename;
         return newFilename;
     }
+
+    public static String getPDFFilename(File file) {
+        String filename = file.getName();
+        filename = filename.substring(0, filename.length() - 4);
+        return filename;
+    }
 }

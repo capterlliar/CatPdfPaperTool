@@ -7,6 +7,7 @@ module com.pdfTool {
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.apache.pdfbox;
+    requires java.desktop;
 
     opens com.pdfTool to javafx.fxml;
     opens com.pdfTool.components to javafx.fxml;
