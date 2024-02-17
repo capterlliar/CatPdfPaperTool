@@ -72,11 +72,11 @@ public class ExportFileViewController extends VBox {
         try {
             for(Node node: this.pageChooser.getChildren()) {
                 Node pageChooser = ((RemovableItemController)node).getChild();
-                File file = ((PageChooserController)pageChooser).export(FileUtil.getTempDir());
+                File file = ((PageChooserController)pageChooser).export(this.getClass().getResource("/com/pdfTool/testfiles").getPath());
                 fileList.add(file);
             }
-            String firstFilename = fileList.get(0).getName();
-            String newFilename = firstFilename.substring(0, Math.min(10,firstFilename.length()))+"等"+fileList.size()+"个文件.pdf";
+            String firstFilename = fileList.get(0).getName().split(" ")[1];
+            String newFilename = firstFilename.substring(0, Math.min(10,firstFilename.length()))+"...等"+fileList.size()+"个文件.pdf";
             PDFUtil.mergeFiles(this.getDirectory()+newFilename, fileList);
             fileList.forEach(File::delete);
         }

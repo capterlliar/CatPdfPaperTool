@@ -36,6 +36,7 @@ public class PageChooserController extends GridPane {
 
     public List<Pair<Integer, Integer>> getSelectedPages(String s) {
         List<Pair<Integer, Integer>> res = new ArrayList<>();
+        //输入为空，默认导出整个文件
         if(s.trim().equals("")) return res;
 
         String[] s1 = s.split(",");
@@ -65,6 +66,8 @@ public class PageChooserController extends GridPane {
     }
     public File export(String dest) throws IOException {
         List<Pair<Integer, Integer>> pages = this.getSelectedPages(this.getText());
+        if(pages.isEmpty()) return this.file;
+
         File res = null;
         switch (this.exportType) {
             case SPLIT -> {
@@ -107,6 +110,5 @@ public class PageChooserController extends GridPane {
         }
     }
 
-//    public Pair<Integer, Integer> getPageRange() {}
     //TODO:字符校验
 }

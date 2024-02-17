@@ -43,10 +43,6 @@ public final class FileUtil {
         }
     }
 
-    public static String getTempDir() {
-        return System.getProperty("");
-    }
-
     public static String getUniqueFilename(String dest, String oldFilename) {
         //Avoid duplicated filename.
         //We do not choose uuid as filename to keep its readability.
