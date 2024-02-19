@@ -65,3 +65,7 @@
     -fx-background-color: white;
 }
 
+#singleFileViewer :expanded {
+    -fx-background-color: #c5c5ff;
+}
+

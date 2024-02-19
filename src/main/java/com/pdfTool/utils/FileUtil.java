@@ -3,6 +3,7 @@ package com.pdfTool.utils;
 import com.pdfTool.defination.Paper;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class FileUtil {
@@ -59,5 +60,45 @@ public final class FileUtil {
         String filename = file.getName();
         filename = filename.substring(0, filename.length() - 4);
         return filename;
+    }
+
+    public static List<String> GetDirFiles(final String dirName) {
+        final File file = new File(dirName);
+        List<String> output = new ArrayList<String>();
+        output = ergodic(file, output);
+        return output;
+    }
+
+    private static List<String> ergodic(final File file, final List<String> resultFileName) {
+        final File[] files = file.listFiles();
+        if (files == null) {
+            return resultFileName;
+        }
+        for (final File f : files) {
+            if (f.isDirectory()) {
+                ergodic(f, resultFileName);
+            }
+            else {
+                resultFileName.add(f.getPath());
+            }
+        }
+        return resultFileName;
+    }
+
+    public static String JoinString(final List<String> list, final String conjunction) {
+        final StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for (final String item : list) {
+            if (first) first = false;
+            else sb.append(conjunction);
+            sb.append(item);
+        }
+        return sb.toString();
+    }
+
+    public static String cleanFileName(String input) {
+        input = input.replace("- ", "");
+        input = input.replaceAll("\\?|\u3001|\u2572|/|\\*|<|>|:", "_");
+        return input.trim();
     }
 }

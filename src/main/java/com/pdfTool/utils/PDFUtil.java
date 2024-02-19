@@ -11,9 +11,12 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,9 +24,16 @@ import javax.imageio.ImageIO;
 
 public final class PDFUtil {
     private static Splitter splitter = null;
-    public static void setNewName(Paper paper) {
-        //test
-        paper.setOptions(Arrays.asList("opt1","opt2","opt3","opt4"));
+    private static PDFTextStripper stripper = null;
+    public static void setNewName(Paper paper) throws IOException {
+        PDFTitleFilter titleFilter = new PDFTitleFilter();
+        PDDocument document = PDDocument.load(paper.getFile());
+        titleFilter.setSortByPosition(true);
+        titleFilter.setStartPage(0);
+        titleFilter.setEndPage(1);
+        titleFilter.getText(document);
+        paper.setOptions(titleFilter.getTitle());
+        document.close();
     }
 
     public static void mergeFiles(String destFilename, List<File> oldFiles) throws IOException {
@@ -94,5 +104,35 @@ public final class PDFUtil {
         }
         document.close();
         return images;
+    }
+
+    public static List<File> getText(List<Pair<Integer, Integer>> pages, File file, String dest) throws IOException {
+        PDDocument document = PDDocument.load(file);
+        String filename = FileUtil.getPDFFilename(file);
+
+        if(stripper == null) {
+            stripper = new PDFTextStripper();
+        }
+
+        if(pages.isEmpty()) {
+            int end = document.getNumberOfPages();
+            pages.add(new Pair<>(1, end));
+        }
+
+        List<File> text = new ArrayList<>();
+        for(Pair<Integer, Integer> pair:pages) {
+            int start = pair.getKey();
+            int end = pair.getValue();
+
+            String newfile = dest + filename + start + "-" + end + ".txt";
+            Writer output = new FileWriter(newfile);
+
+            stripper.setStartPage(start);
+            stripper.setEndPage(end);
+            stripper.writeText(document, output);
+            output.close();
+        }
+        document.close();
+        return text;
     }
 }

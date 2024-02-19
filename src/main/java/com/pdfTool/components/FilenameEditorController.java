@@ -37,7 +37,6 @@ public class FilenameEditorController extends TreeItem<HBox> {
     }
     public void chooseOption(String text) {
         this.setText(text);
-        this.setExpanded(false);
     }
     public String getNewPath() {
         String newPath = FileUtil.getFileDirectory(paper.getFile())+File.separator+this.getText();
@@ -66,24 +65,30 @@ public class FilenameEditorController extends TreeItem<HBox> {
 
     public void modify() {
         this.getChildren().removeAll(this.getChildren());
-        PDFUtil.setNewName(this.paper);
-
-        List<String> options = this.paper.getOptions();
-        if (options != null) {
-            if(options.size() > 0) {
-                this.setText(options.get(0));
-                for(int i=1;i<options.size();i++){
-                    this.getChildren().add(new FilenameOptionController(options.get(i), this));
+        try {
+            PDFUtil.setNewName(this.paper);
+            List<String> options = this.paper.getOptions();
+            if (options != null) {
+                if(options.size() > 0) {
+                    this.setText(options.get(0));
+                    for(int i=1;i<options.size();i++){
+                        this.getChildren().add(new FilenameOptionController(options.get(i), this));
+                    }
                 }
             }
+            this.setExpanded(false);
         }
-        this.setExpanded(false);
+        catch (Exception e) {
+
+        }
     }
+
     private void init(Paper paper, FileViewController parent) {
         this.paper = paper;
         this.parent = parent;
         this.setText(paper.getFile().getName());
         this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
+
     }
     public FilenameEditorController(Paper paper, FileViewController parent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameEditor.fxml"));

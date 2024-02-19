@@ -81,7 +81,7 @@ public class PageChooserController extends GridPane {
                 }
             }
             case TEXT -> {
-
+                PDFUtil.getText(pages, this.file, dest);
             }
             case IMAGE -> {
                 //pages.isEmpty will be handled in the following function.
