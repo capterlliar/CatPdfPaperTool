@@ -1,3 +1,15 @@
+.button {
+    -fx-background-color: transparent;
+}
+
+.button:hover {
+    -fx-background-color: #c5c5ff;
+}
+
+.button:pressed {
+    -fx-background-color: #8c8cff;
+}
+
 .scroll-bar:vertical .track{
     -fx-background-color: #ffffff;
     -fx-border-color:transparent;
@@ -41,5 +53,8 @@
 }
 
 #value {
-    -fx-padding: 0 0 0 10;
+    -fx-padding: 5 0 5 10;
+    -fx-background-color: transparent;
+    -fx-border-color: #e7e7e7;
+    -fx-border-width: 0 0 0 5;
 }

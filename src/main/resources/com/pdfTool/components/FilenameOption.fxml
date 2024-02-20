@@ -6,7 +6,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import javafx.scene.control.TextArea?>
 <fx:root type="TreeItem"
-         fx:id="singleFileViewer"
+         fx:id="fileNameOption"
          xmlns:fx="http://javafx.com/fxml">
     <value>
         <HBox fx:id="value" stylesheets="@FilenameOption.css" spacing="5">

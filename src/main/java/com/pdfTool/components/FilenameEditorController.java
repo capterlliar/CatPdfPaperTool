@@ -4,6 +4,8 @@ import com.pdfTool.FileViewController;
 import com.pdfTool.defination.Paper;
 import com.pdfTool.utils.FileUtil;
 import com.pdfTool.utils.PDFUtil;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -88,7 +90,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
         this.parent = parent;
         this.setText(paper.getFile().getName());
         this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
-
+        this.expandedProperty().addListener((observableValue, aBoolean, t1) -> this.parent.focusOn(this));
     }
     public FilenameEditorController(Paper paper, FileViewController parent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameEditor.fxml"));

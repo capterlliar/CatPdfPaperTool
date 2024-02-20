@@ -1,5 +1,5 @@
 .button {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
 }
 
 .button:hover {
@@ -63,9 +63,5 @@
 
 .text-area .content {
     -fx-background-color: white;
-}
-
-#singleFileViewer :expanded {
-    -fx-background-color: #c5c5ff;
 }
 

@@ -4,15 +4,16 @@ import com.pdfTool.components.FilenameEditorController;
 import com.pdfTool.defination.Paper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
-import javafx.scene.input.ScrollEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class FileViewController extends BorderPane {
         return INSTANCE;
     }
     @FXML
-    ScrollPane scrollPane;
+    TreeView<HBox> treeView;
     @FXML
     CheckBox checkBox;
     TreeItem<HBox> rootNode = null;
@@ -47,6 +48,11 @@ public class FileViewController extends BorderPane {
             FilenameEditorController content = new FilenameEditorController(paper, this);
             rootNode.getChildren().add(content);
         }
+    }
+
+    public void focusOn(TreeItem<HBox> treeItem) {
+        this.treeView.getSelectionModel().clearSelection();
+        this.treeView.getSelectionModel().select(treeItem);
     }
 
     private void init() {
@@ -67,23 +73,12 @@ public class FileViewController extends BorderPane {
             rootNode = new TreeItem<>(hBox);
             rootNode.setExpanded(true);
 
-            TreeView<HBox> treeView = new TreeView<>();
             treeView.setRoot(rootNode);
             treeView.setPrefHeight(500);
-
-            scrollPane.setContent(treeView);
         }
-        // Forbid horizontal scroll event of scrollPane.
-        scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
-            if (event.getDeltaX() != 0) {
-                event.consume();
-            }
-        });
-        checkBox.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            this.rootNode.getChildren().forEach(node -> {
-                ((FilenameEditorController)node).select(newValue);
-            });
-        });
+        checkBox.selectedProperty().addListener((observableValue, oldValue, newValue) ->
+                this.rootNode.getChildren().forEach(node ->
+                    ((FilenameEditorController)node).select(newValue)));
     }
 
     public List<FilenameEditorController> getSelectedNodes() {
@@ -123,7 +118,7 @@ public class FileViewController extends BorderPane {
 
     @FXML
     protected void modify() {
-        this.getSelectedNodes().forEach(FilenameEditorController::modify);
+        this.getSelectedNodes().parallelStream().forEach(FilenameEditorController::modify);
     }
 
     @FXML
