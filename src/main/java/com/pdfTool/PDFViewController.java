@@ -10,6 +10,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class PDFViewController extends HBox {
+    private static PDFViewController INSTANCE = null;
+    public static PDFViewController getInstance() {
+        return INSTANCE;
+    }
     SampleViewer sampleViewer = null;
 
     public void loadPDF(String path) throws IOException {
@@ -18,12 +22,16 @@ public class PDFViewController extends HBox {
             sampleViewer = new SampleViewer(pdf);
         }
         else {
-            //TODO: add a method to fxPDF to open a new file.
+            sampleViewer.loadPDF(pdf);
             //TODO: also adjust default zoom size to 30.
         }
         sampleViewer.setPrefWidth(10000);
         sampleViewer.setTheme(AppearanceType.DARK);
         this.getChildren().add(sampleViewer);
+    }
+
+    private void init() {
+        INSTANCE = this;
     }
 
     public PDFViewController() {
@@ -33,6 +41,7 @@ public class PDFViewController extends HBox {
 
         try {
             fxmlLoader.load();
+            init();
 //            test();
         } catch (Exception exception) {
             throw new RuntimeException(exception);

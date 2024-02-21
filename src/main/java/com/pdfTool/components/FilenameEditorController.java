@@ -1,11 +1,10 @@
 package com.pdfTool.components;
 
 import com.pdfTool.FileViewController;
+import com.pdfTool.PDFViewController;
 import com.pdfTool.defination.Paper;
 import com.pdfTool.utils.FileUtil;
 import com.pdfTool.utils.PDFUtil;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -107,7 +106,13 @@ public class FilenameEditorController extends TreeItem<HBox> {
 
     @FXML
     protected void openPDF() {
-
+        try {
+            PDFViewController.getInstance().loadPDF(this.paper.getFile().getPath());
+            this.parent.focusOn(this);
+        }
+        catch (Exception e) {
+            //TODO
+        }
     }
 
     @FXML
