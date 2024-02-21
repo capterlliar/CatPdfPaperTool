@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.text.Text?>
 <fx:root type="VBox"
          spacing="5"
          stylesheets="@ExportFileView.css"
@@ -22,15 +23,23 @@
     <HBox>
         <Label text="*不填写则默认全部导出"/>
         <HBox HBox.hgrow="ALWAYS"/>
-        <Label text="导出为多个文件"/>
+        <Label fx:id="text2" text="导出为多个文件"/>
     </HBox>
-    <VBox fx:id="pageChooser" spacing="5"></VBox>
+
+    <ScrollPane fitToWidth="true" prefHeight="200">
+        <VBox fx:id="pageChooser" spacing="5"></VBox>
+    </ScrollPane>
+
     <HBox>
         <HBox HBox.hgrow="ALWAYS"/>
-        <Label text="将所有所选内容导出到一个文件  "/>
+        <Label fx:id="text1"/>
         <CheckBox fx:id="exportAsOneFile"/>
     </HBox>
     <VBox VBox.vgrow="ALWAYS"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label fx:id="status"/>
+    </HBox>
     <HBox>
         <Button onAction="#addFile" text="添加文件">
             <graphic>

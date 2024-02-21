@@ -57,12 +57,14 @@ public class MenuViewController extends HBox {
     @FXML
     protected void getPicture(){
         ExportFileViewController splitFile = new ExportFileViewController(ExportType.IMAGE);
+        splitFile.addFile(FileViewController.getInstance().exportSelectedFiles());
         splitFile.show();
     }
 
     @FXML
     protected void getText(){
         ExportFileViewController splitFile = new ExportFileViewController(ExportType.TEXT);
+        splitFile.addFile(FileViewController.getInstance().exportSelectedFiles());
         splitFile.show();
     }
 

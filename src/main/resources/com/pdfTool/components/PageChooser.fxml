@@ -8,7 +8,7 @@
          hgap="5"
          stylesheets="@PageChooser.css"
          xmlns:fx="http://javafx.com/fxml">
-    <Text text="页数" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Text fx:id="text" text="页数" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
     <TextField fx:id="textField" prefWidth="150" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
     <CheckBox fx:id="exportAsMutiFiles" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 </fx:root>
