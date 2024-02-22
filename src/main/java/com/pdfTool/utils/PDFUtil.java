@@ -1,6 +1,6 @@
 package com.pdfTool.utils;
 
-import com.pdfTool.defination.Paper;
+import com.pdfTool.defination.RenameItem;
 import javafx.util.Pair;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.io.MemoryUsageSetting;
@@ -18,21 +18,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.imageio.ImageIO;
 
 public final class PDFUtil {
     private static Splitter splitter = null;
     private static PDFTextStripper stripper = null;
-    public static void setNewName(Paper paper) throws IOException {
+    public static void setNewName(RenameItem renameItem) throws IOException {
         PDFTitleFilter titleFilter = new PDFTitleFilter();
-        PDDocument document = PDDocument.load(paper.getFile());
+        PDDocument document = PDDocument.load(renameItem.getFile());
         titleFilter.setSortByPosition(true);
         titleFilter.setStartPage(0);
         titleFilter.setEndPage(1);
         titleFilter.getText(document);
-        paper.setOptions(titleFilter.getTitle());
+        renameItem.setOptions(titleFilter.getTitle());
         document.close();
     }
 
@@ -42,11 +41,10 @@ public final class PDFUtil {
         for (File file: oldFiles) {
             pdfMerger.addSource(file);
         }
-        //TODO: more detailed setting?
         pdfMerger.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
     }
 
-    public static List<File> splitAsMutiFiles(List<Pair<Integer, Integer>> pages, File file, String dest) throws  IOException {
+    public static List<File> splitAsMutiFiles(List<Pair<Integer, Integer>> pages, File file, String destDir) throws  IOException {
         if(splitter == null) {
             splitter = new Splitter();
         }
@@ -64,7 +62,7 @@ public final class PDFUtil {
             List<PDDocument> splittedPages = splitter.split(document);
 
             for(PDDocument pdDocument:splittedPages) {
-                String newFile = dest + filename + start + "-" + end + ".pdf";
+                String newFile = FileUtil.getSplittedFilename(destDir, filename, start, end);
                 pdDocument.save(newFile);
                 pdDocument.close();
                 files.add(new File(newFile));

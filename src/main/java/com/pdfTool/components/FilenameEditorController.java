@@ -2,7 +2,7 @@ package com.pdfTool.components;
 
 import com.pdfTool.FileViewController;
 import com.pdfTool.PDFViewController;
-import com.pdfTool.defination.Paper;
+import com.pdfTool.defination.RenameItem;
 import com.pdfTool.utils.FileUtil;
 import com.pdfTool.utils.PDFUtil;
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
     HBox value;
     @FXML
     CheckBox checkBox;
-    Paper paper;
+    RenameItem renameItem;
     FileViewController parent;
     public String getText() {
         return this.textArea.getText();
@@ -40,7 +40,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
         this.setText(text);
     }
     public String getNewPath() {
-        String newPath = FileUtil.getFileDirectory(paper.getFile())+File.separator+this.getText();
+        String newPath = FileUtil.getFileDirectory(renameItem.getFile())+File.separator+this.getText();
         if(!newPath.endsWith(".pdf")) newPath += ".pdf";
         return newPath;
     }
@@ -49,7 +49,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
     }
 
     public File exportExistingFile() {
-        return this.paper.getFile();
+        return this.renameItem.getFile();
     }
 
     public void rename() {
@@ -57,7 +57,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
         boolean renamed = FileUtil.rename(this.exportExistingFile(), newFile);
         if(renamed) {
             this.select(false);
-            this.paper.setFile(newFile);
+            this.renameItem.setFile(newFile);
         }
         else {
             //TODO:重命名失败警告
@@ -67,8 +67,8 @@ public class FilenameEditorController extends TreeItem<HBox> {
     public void modify() {
         this.getChildren().removeAll(this.getChildren());
         try {
-            PDFUtil.setNewName(this.paper);
-            List<String> options = this.paper.getOptions();
+            PDFUtil.setNewName(this.renameItem);
+            List<String> options = this.renameItem.getOptions();
             if (options != null) {
                 if(options.size() > 0) {
                     this.setText(options.get(0));
@@ -84,21 +84,21 @@ public class FilenameEditorController extends TreeItem<HBox> {
         }
     }
 
-    private void init(Paper paper, FileViewController parent) {
-        this.paper = paper;
+    private void init(RenameItem renameItem, FileViewController parent) {
+        this.renameItem = renameItem;
         this.parent = parent;
-        this.setText(paper.getFile().getName());
+        this.setText(renameItem.getFile().getName());
         this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
         this.expandedProperty().addListener((observableValue, aBoolean, t1) -> this.parent.focusOn(this));
     }
-    public FilenameEditorController(Paper paper, FileViewController parent) {
+    public FilenameEditorController(RenameItem renameItem, FileViewController parent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameEditor.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
         try {
             fxmlLoader.load();
-            init(paper,parent);
+            init(renameItem,parent);
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
@@ -107,7 +107,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
     @FXML
     protected void openPDF() {
         try {
-            PDFViewController.getInstance().loadPDF(this.paper.getFile().getPath());
+            PDFViewController.getInstance().loadPDF(this.renameItem.getFile().getPath());
             this.parent.focusOn(this);
         }
         catch (Exception e) {

@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.io.File;
 import java.util.List;
 
-public class Paper {
+public class RenameItem {
     @Getter
     @Setter
     int id;
@@ -16,7 +16,7 @@ public class Paper {
     @Setter
     @Getter
     List<String> options;
-    public Paper(File file) {
+    public RenameItem(File file) {
         this.file = file;
         this.options = null;
     }

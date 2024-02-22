@@ -1,7 +1,7 @@
 package com.pdfTool;
 
 import com.pdfTool.components.FilenameEditorController;
-import com.pdfTool.defination.Paper;
+import com.pdfTool.defination.RenameItem;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -37,15 +37,15 @@ public class FileViewController extends BorderPane {
     HashSet<File> files;
     Integer cnt=0;
 
-    public void loadPaper(List<Paper> papers) {
-        for(Paper paper:papers){
+    public void loadPaper(List<RenameItem> renameItems) {
+        for(RenameItem renameItem : renameItems){
             // Prevent duplicated paper.
-            if(files.contains(paper.getFile()))
+            if(files.contains(renameItem.getFile()))
                 continue;
-            files.add(paper.getFile());
+            files.add(renameItem.getFile());
 
-            paper.setId(cnt++);
-            FilenameEditorController content = new FilenameEditorController(paper, this);
+            renameItem.setId(cnt++);
+            FilenameEditorController content = new FilenameEditorController(renameItem, this);
             rootNode.getChildren().add(content);
         }
     }

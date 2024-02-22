@@ -23,7 +23,6 @@ public class PDFViewController extends HBox {
         }
         else {
             sampleViewer.loadPDF(pdf);
-            //TODO: also adjust default zoom size to 30.
         }
         sampleViewer.setPrefWidth(10000);
         sampleViewer.setTheme(AppearanceType.DARK);

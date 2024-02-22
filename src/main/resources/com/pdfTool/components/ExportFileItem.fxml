@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <fx:root type="GridPane"
          hgap="5"
-         stylesheets="@PageChooser.css"
+         stylesheets="@ExportFileItem.css"
          xmlns:fx="http://javafx.com/fxml">
     <Text fx:id="text" text="页数" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
     <TextField fx:id="textField" prefWidth="150" GridPane.rowIndex="0" GridPane.columnIndex="2"/>

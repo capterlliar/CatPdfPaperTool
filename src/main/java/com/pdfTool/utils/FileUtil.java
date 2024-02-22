@@ -1,6 +1,6 @@
 package com.pdfTool.utils;
 
-import com.pdfTool.defination.Paper;
+import com.pdfTool.defination.RenameItem;
 import javafx.util.Pair;
 
 import java.io.File;
@@ -18,8 +18,8 @@ public final class FileUtil {
             return path.substring(0,pos);
         }
     }
-    public static List<Paper> filesToPapers(List<File> files) {
-        return files.stream().map(Paper::new).toList();
+    public static List<RenameItem> filesToPapers(List<File> files) {
+        return files.stream().map(RenameItem::new).toList();
     }
     public static boolean rename(File oldFile, File newFile) {
         if(oldFile.exists()) {
@@ -45,16 +45,20 @@ public final class FileUtil {
         }
     }
 
-    public static String getUniqueFilename(String dest, String oldFilename) {
-        //Avoid duplicated filename.
-        //We do not choose uuid as filename to keep its readability.
-        String newFilename;
-        int cnt = 1;
-        while (new File(dest + "new" + cnt + " " + oldFilename).exists()) {
+    public static String getUniqueFilename(String dest, String filenameWithoutSuffix) {
+        if(!dest.endsWith(File.separator)) dest += File.separator;
+        if(filenameWithoutSuffix.endsWith(".pdf")) {
+            filenameWithoutSuffix = filenameWithoutSuffix.substring(0, filenameWithoutSuffix.length() - 4);
+        }
+        if(!(new File(dest + filenameWithoutSuffix + ".pdf").exists())){
+            return dest + filenameWithoutSuffix + ".pdf";
+        }
+
+        int cnt=1;
+        while (new File(dest + filenameWithoutSuffix + "(" + cnt + ").pdf").exists()) {
             cnt++;
         }
-        newFilename = dest + "new" + cnt + " " + oldFilename;
-        return newFilename;
+        return dest + filenameWithoutSuffix + "(" + cnt + ").pdf";
     }
 
     public static String getPDFFilename(File file) {
@@ -103,9 +107,15 @@ public final class FileUtil {
         return input.trim();
     }
 
-    public static String getFileListName(List<File> fileList) {
-        String firstFilename = fileList.get(0).getName().split(" ")[1];
-        return firstFilename.substring(0, Math.min(10,firstFilename.length()))+"...等"+fileList.size()+"个文件.pdf";
+    public static String getFileListName(String dest, List<File> fileList) {
+        if(fileList.isEmpty()) return null;
+        String firstFilename = FileUtil.getPDFFilename(fileList.get(0));
+        String filename = firstFilename.substring(0, Math.min(10,firstFilename.length()))+"...等"+fileList.size()+"个文件";
+        return FileUtil.getUniqueFilename(dest, filename);
+    }
+
+    public static String getSplittedFilename(String dest, String filename, int start, int end) {
+        return FileUtil.getUniqueFilename(dest, filename + start + "-" + end);
     }
 
     public static List<Pair<Integer, Integer>> getSelectedPages(String s) {
