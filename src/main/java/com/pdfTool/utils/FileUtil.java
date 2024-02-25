@@ -45,20 +45,21 @@ public final class FileUtil {
         }
     }
 
-    public static String getUniqueFilename(String dest, String filenameWithoutSuffix) {
+    public static String getUniqueFilename(String dest, String filenameWithoutSuffix, String suffix) {
         if(!dest.endsWith(File.separator)) dest += File.separator;
-        if(filenameWithoutSuffix.endsWith(".pdf")) {
-            filenameWithoutSuffix = filenameWithoutSuffix.substring(0, filenameWithoutSuffix.length() - 4);
+        if(filenameWithoutSuffix.endsWith(suffix)) {
+            filenameWithoutSuffix = filenameWithoutSuffix
+                    .substring(0, filenameWithoutSuffix.length() - suffix.length());
         }
-        if(!(new File(dest + filenameWithoutSuffix + ".pdf").exists())){
-            return dest + filenameWithoutSuffix + ".pdf";
+        if(!(new File(dest + filenameWithoutSuffix + suffix).exists())){
+            return dest + filenameWithoutSuffix + suffix;
         }
 
         int cnt=1;
-        while (new File(dest + filenameWithoutSuffix + "(" + cnt + ").pdf").exists()) {
+        while (new File(dest + filenameWithoutSuffix + "(" + cnt + ")" + suffix).exists()) {
             cnt++;
         }
-        return dest + filenameWithoutSuffix + "(" + cnt + ").pdf";
+        return dest + filenameWithoutSuffix + "(" + cnt + ")" + suffix;
     }
 
     public static String getPDFFilename(File file) {
@@ -107,15 +108,15 @@ public final class FileUtil {
         return input.trim();
     }
 
-    public static String getFileListName(String dest, List<File> fileList) {
+    public static String getFileListName(String dest, List<File> fileList, String suffix) {
         if(fileList.isEmpty()) return null;
-        String firstFilename = FileUtil.getPDFFilename(fileList.get(0));
+        String firstFilename = fileList.get(0).getName();
         String filename = firstFilename.substring(0, Math.min(10,firstFilename.length()))+"...等"+fileList.size()+"个文件";
-        return FileUtil.getUniqueFilename(dest, filename);
+        return FileUtil.getUniqueFilename(dest, filename, suffix);
     }
 
-    public static String getSplittedFilename(String dest, String filename, int start, int end) {
-        return FileUtil.getUniqueFilename(dest, filename + start + "-" + end);
+    public static String getSplittedFilename(String dest, String filename, int start, int end, String suffix) {
+        return FileUtil.getUniqueFilename(dest, filename + start + "-" + end, suffix);
     }
 
     public static List<Pair<Integer, Integer>> getSelectedPages(String s) {

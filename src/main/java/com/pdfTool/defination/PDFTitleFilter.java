@@ -1,6 +1,7 @@
-package com.pdfTool.utils;
+package com.pdfTool.defination;
 
 import com.pdfTool.defination.PDFWord;
+import com.pdfTool.utils.FileUtil;
 import javafx.util.Pair;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;

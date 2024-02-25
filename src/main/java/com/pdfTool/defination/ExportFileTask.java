@@ -1,13 +1,16 @@
-package com.pdfTool.utils;
+package com.pdfTool.defination;
 
-import com.pdfTool.defination.ExportItem;
-import com.pdfTool.defination.ExportType;
+import com.pdfTool.utils.FileUtil;
+import com.pdfTool.utils.PDFUtil;
 import javafx.concurrent.Task;
 import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class ExportFileTask extends Task<Void> {
     List<ExportItem> exportItems;
@@ -34,7 +37,7 @@ public class ExportFileTask extends Task<Void> {
             List<File> splittedFiles = PDFUtil.splitAsMutiFiles(pages, file, tempDir);
             fileList.addAll(splittedFiles);
         }
-        String newPath = FileUtil.getFileListName(this.directory, fileList);
+        String newPath = FileUtil.getFileListName(this.directory, fileList, ".pdf");
         if(newPath == null) return;
         PDFUtil.mergeFiles(newPath, fileList);
         fileList.forEach(File::delete);
@@ -46,7 +49,7 @@ public class ExportFileTask extends Task<Void> {
             List<File> splittedFiles = PDFUtil.splitAsMutiFiles(pages, file, this.directory);
             if(!exportItem.isExportAsMultiFiles()) {
                 String filename = FileUtil.getPDFFilename(file);
-                String newFilename = FileUtil.getUniqueFilename(this.directory, filename);
+                String newFilename = FileUtil.getUniqueFilename(this.directory, filename, ".pdf");
                 PDFUtil.mergeFiles(newFilename, splittedFiles);
                 splittedFiles.forEach(File::delete);
             }
@@ -57,6 +60,8 @@ public class ExportFileTask extends Task<Void> {
             File file = exportItem.getFile();
             List<Pair<Integer, Integer>> pages = exportItem.getSelectedPages();
             String tempDir = this.directory + FileUtil.getPDFFilename(file) + "/";
+            File dir = new File(tempDir);
+            if(!dir.exists()) dir.mkdirs();
             PDFUtil.getImages(pages, file, tempDir);
         }
     }
@@ -68,10 +73,28 @@ public class ExportFileTask extends Task<Void> {
         }
     }
     private void textIntoMutiFiles() throws IOException {
-
+        for(ExportItem exportItem:this.exportItems) {
+            File file = exportItem.getFile();
+            List<Pair<Integer, Integer>> pages = exportItem.getSelectedPages();
+            if(exportItem.isExportAsMultiFiles()) {
+                PDFUtil.getTextAsMutiFiles(pages, file, this.directory);
+            }
+            else {
+                PDFUtil.getTextAsOneFile(pages, file, this.directory);
+            }
+        }
     }
     private void textIntoOneFile() throws IOException {
-
+        List<File> fileList = this.exportItems.stream().map(ExportItem::getFile).toList();
+        String filename = FileUtil.getFileListName(this.directory, fileList, ".txt");
+        if(filename == null) return;
+        Writer output = new PDFFileWriter(filename);
+        for(ExportItem exportItem:this.exportItems) {
+            File file = exportItem.getFile();
+            List<Pair<Integer, Integer>> pages = exportItem.getSelectedPages();
+            PDFUtil.appendText(pages, file, output);
+        }
+        output.close();
     }
     @Override
     protected Void call() throws Exception {

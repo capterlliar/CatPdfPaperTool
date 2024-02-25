@@ -4,10 +4,9 @@ import com.pdfTool.components.ExportFileItemController;
 import com.pdfTool.components.RemovableItemController;
 import com.pdfTool.defination.ExportItem;
 import com.pdfTool.defination.ExportType;
-import com.pdfTool.utils.ExportFileTask;
+import com.pdfTool.defination.ExportFileTask;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.FileUtil;
-import com.pdfTool.utils.PDFUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,10 +19,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class ExportFileViewController extends VBox {
