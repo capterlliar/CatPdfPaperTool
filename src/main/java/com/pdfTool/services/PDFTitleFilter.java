@@ -1,4 +1,4 @@
-package com.pdfTool.defination;
+package com.pdfTool.services;
 
 import com.pdfTool.defination.PDFWord;
 import com.pdfTool.utils.FileUtil;

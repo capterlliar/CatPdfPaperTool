@@ -6,12 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 import java.io.File;
 import java.util.List;
 
 public class FileListController extends VBox {
     @FXML
+    @Getter
     VBox fileContainer;
     @FXML
     Label cnt;
@@ -45,17 +47,10 @@ public class FileListController extends VBox {
 
     public void addFile(List<File> files) {
         files.forEach(file -> {
-            Label label = new Label(file.getName());
-            label.setWrapText(true);
-            label.prefWidthProperty().bind(this.fileContainer.widthProperty().add(-50));
-            label.setStyle("-fx-text-overrun: ellipsis;");
-            RemovableItemController item = new RemovableItemController(this.fileContainer, label, file);
+            FileItemController fileItem = new FileItemController(file);
+            fileItem.prefWidthProperty().bind(this.fileContainer.widthProperty().add(-50));
+            RemovableItemController item = new RemovableItemController(this.fileContainer, fileItem);
             this.fileContainer.getChildren().add(item);
         });
-    }
-
-    public List<File> getFiles() {
-        return this.fileContainer.getChildren().stream()
-                .map(node -> ((RemovableItemController)node).getFile()).toList();
     }
 }

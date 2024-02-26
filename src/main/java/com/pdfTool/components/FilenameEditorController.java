@@ -52,36 +52,42 @@ public class FilenameEditorController extends TreeItem<HBox> {
         return this.renameItem.getFile();
     }
 
-    public void rename() {
+    public void rename() throws RuntimeException {
+        this.textArea.setStyle("-fx-border-color: #e7e7e7;");
+
         File newFile = this.exportNewFile();
         boolean renamed = FileUtil.rename(this.exportExistingFile(), newFile);
         if(renamed) {
             this.select(false);
             this.renameItem.setFile(newFile);
+            this.getChildren().removeAll(this.getChildren());
         }
         else {
-            //TODO:重命名失败警告
+            this.textArea.setStyle("-fx-border-color: red");
+            throw new RuntimeException();
         }
     }
 
-    public void modify() {
+    public void modify() throws RuntimeException {
+        this.textArea.setStyle("-fx-border-color: #e7e7e7;");
+
         this.getChildren().removeAll(this.getChildren());
         try {
             PDFUtil.setNewName(this.renameItem);
-            List<String> options = this.renameItem.getOptions();
-            if (options != null) {
-                if(options.size() > 0) {
-                    this.setText(options.get(0));
-                    for(int i=1;i<options.size();i++){
-                        this.getChildren().add(new FilenameOptionController(options.get(i), this));
-                    }
+        } catch (Exception e) {
+            this.textArea.setStyle("-fx-border-color: red");
+            throw new RuntimeException();
+        }
+        List<String> options = this.renameItem.getOptions();
+        if (options != null) {
+            if(options.size() > 0) {
+                this.setText(options.get(0));
+                for(int i=1;i<options.size();i++){
+                    this.getChildren().add(new FilenameOptionController(options.get(i), this));
                 }
             }
-            this.setExpanded(false);
         }
-        catch (Exception e) {
-
-        }
+        this.setExpanded(false);
     }
 
     private void init(RenameItem renameItem, FileViewController parent) {
@@ -106,13 +112,8 @@ public class FilenameEditorController extends TreeItem<HBox> {
 
     @FXML
     protected void openPDF() {
-        try {
-            PDFViewController.getInstance().loadPDF(this.renameItem.getFile().getPath());
-            this.parent.focusOn(this);
-        }
-        catch (Exception e) {
-            //TODO
-        }
+        PDFViewController.getInstance().loadPDF(this.renameItem.getFile().getPath());
+        this.parent.focusOn(this);
     }
 
     @FXML

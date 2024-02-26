@@ -1,5 +1,7 @@
-package com.pdfTool.defination;
+package com.pdfTool.services;
 
+import com.pdfTool.defination.ExportItem;
+import com.pdfTool.defination.ExportType;
 import com.pdfTool.utils.FileUtil;
 import com.pdfTool.utils.PDFUtil;
 import javafx.concurrent.Task;
@@ -35,6 +37,7 @@ public class ExportFileTask extends Task<Void> {
                 continue;
             }
             List<File> splittedFiles = PDFUtil.splitAsMutiFiles(pages, file, tempDir);
+            this.updateMessage(file.getName());
             fileList.addAll(splittedFiles);
         }
         String newPath = FileUtil.getFileListName(this.directory, fileList, ".pdf");
@@ -53,6 +56,7 @@ public class ExportFileTask extends Task<Void> {
                 PDFUtil.mergeFiles(newFilename, splittedFiles);
                 splittedFiles.forEach(File::delete);
             }
+            this.updateMessage(file.getName());
         }
     }
     private void imageIntoMutiDirs() throws IOException {
@@ -63,6 +67,7 @@ public class ExportFileTask extends Task<Void> {
             File dir = new File(tempDir);
             if(!dir.exists()) dir.mkdirs();
             PDFUtil.getImages(pages, file, tempDir);
+            this.updateMessage(file.getName());
         }
     }
     private void imageIntoOneDir() throws IOException {
@@ -70,6 +75,7 @@ public class ExportFileTask extends Task<Void> {
             File file = exportItem.getFile();
             List<Pair<Integer, Integer>> pages = exportItem.getSelectedPages();
             PDFUtil.getImages(pages, file, this.directory);
+            this.updateMessage(file.getName());
         }
     }
     private void textIntoMutiFiles() throws IOException {
@@ -82,6 +88,7 @@ public class ExportFileTask extends Task<Void> {
             else {
                 PDFUtil.getTextAsOneFile(pages, file, this.directory);
             }
+            this.updateMessage(file.getName());
         }
     }
     private void textIntoOneFile() throws IOException {
@@ -93,6 +100,7 @@ public class ExportFileTask extends Task<Void> {
             File file = exportItem.getFile();
             List<Pair<Integer, Integer>> pages = exportItem.getSelectedPages();
             PDFUtil.appendText(pages, file, output);
+            this.updateMessage(file.getName());
         }
         output.close();
     }

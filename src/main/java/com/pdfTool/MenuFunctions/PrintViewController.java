@@ -1,21 +1,38 @@
 package com.pdfTool.MenuFunctions;
 
+import com.pdfTool.components.FileItemController;
 import com.pdfTool.components.FileListController;
+import com.pdfTool.components.RemovableItemController;
+import com.pdfTool.services.MergeFileTask;
+import com.pdfTool.services.PrintFileTask;
 import com.pdfTool.utils.FileChooserUtil;
+import com.pdfTool.utils.PrinterUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.print.PrintService;
 import java.io.File;
 import java.util.List;
 
 public class PrintViewController extends VBox {
     @FXML
     FileListController fileList;
+    @FXML
+    ChoiceBox<PrintService> printerChoiceBox;
+    @FXML
+    TextField copy;
+    @FXML
+    Label status;
     Stage stage;
     public void show() {
         Scene scene = new Scene(this);
@@ -31,7 +48,32 @@ public class PrintViewController extends VBox {
         stage.setScene(scene);
         stage.show();
     }
-    protected void init() {
+    private PrintService getSelectedPrintService() {
+        return this.printerChoiceBox.getValue();
+    }
+    private Integer getCopies() {
+        String s = this.copy.getText();
+        if(!s.matches("[0-9]+")) return null;
+        return Integer.parseInt(s);
+    }
+    private void setStatus(String text, String color) {
+        this.status.setText(text);
+        this.status.setTextFill(Color.valueOf(color));
+    }
+    private List<FileItemController> getFileItems() {
+        return this.fileList.getFileContainer().getChildren().stream()
+                .map(node -> {
+                    Node node1 = ((RemovableItemController)node).getChild();
+                    return ((FileItemController)node1);
+                }).toList();
+    }
+    private List<File> getFiles() {
+        return this.getFileItems().stream().map(FileItemController::getFile).toList();
+    }
+    private void init() {
+        List<PrintService> printServices = PrinterUtil.getPrintServices();
+        this.printerChoiceBox.getItems().addAll(printServices);
+        this.printerChoiceBox.setValue(printServices.get(0));
         this.setOnMouseClicked(e -> this.requestFocus());
     }
     public PrintViewController() {
@@ -49,7 +91,29 @@ public class PrintViewController extends VBox {
 
     @FXML
     protected void print() {
+        this.setStatus("", "black");
+        PrintService printService = this.getSelectedPrintService();
+        Integer copies = this.getCopies();
+        List<File> files = this.getFiles();
+        if(printService == null || copies == null || files == null) return;
+        if(files.isEmpty()) return;
 
+        this.getFileItems().forEach(fileItemController -> {
+            fileItemController.setFilenameColor("black");
+        });
+
+        PrintFileTask printFileTask = new PrintFileTask(files, printService, copies.intValue());
+        printFileTask.setOnSucceeded(e -> this.setStatus("打印成功", "green"));
+        printFileTask.setOnFailed(e -> this.setStatus("打印失败", "red"));
+        printFileTask.messageProperty().addListener((observableValue, s, t1) -> {
+            this.getFileItems().forEach(fileItemController -> {
+                if(fileItemController.getFile().getName().equals(t1)) {
+                    fileItemController.setFilenameColor("green");
+                }
+            });
+        });
+        printFileTask.run();
+        this.setStatus("打印中", "black");
     }
 
     @FXML
