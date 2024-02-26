@@ -4,13 +4,11 @@ import com.pdfTool.components.FilenameEditorController;
 import com.pdfTool.defination.RenameItem;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -33,6 +31,8 @@ public class FileViewController extends BorderPane {
     TreeView<HBox> treeView;
     @FXML
     CheckBox checkBox;
+    @FXML
+    Label status;
     TreeItem<HBox> rootNode = null;
     HashSet<File> files;
     Integer cnt=0;
@@ -81,7 +81,7 @@ public class FileViewController extends BorderPane {
                     ((FilenameEditorController)node).select(newValue)));
     }
 
-    public List<FilenameEditorController> getSelectedNodes() {
+    private List<FilenameEditorController> getSelectedNodes() {
         return  this.rootNode.getChildren().stream()
                 .filter(node -> ((FilenameEditorController)node).selected())
                 .map(node -> ((FilenameEditorController)node)).toList();
@@ -110,23 +110,45 @@ public class FileViewController extends BorderPane {
         }
     }
 
-    protected void clearAll() {
+    private void clearAll() {
         this.rootNode.getChildren().removeAll(this.rootNode.getChildren());
         this.files.clear();
     }
-
+    private void setStatus(String text, String color) {
+        this.status.setText(text);
+        this.status.setTextFill(Color.valueOf(color));
+    }
 
     @FXML
     protected void modify() {
-        this.getSelectedNodes().parallelStream().forEach(FilenameEditorController::modify);
+        this.setStatus("获取论文标题中...", "black");
+        boolean success = true;
+        for(FilenameEditorController filenameEditor:this.getSelectedNodes()) {
+            try{
+                filenameEditor.modify();
+            } catch (Exception e) {
+                this.setStatus("该文件错误", "red");
+                success = false;
+            }
+        }
+        if(success) this.setStatus("获取成功", "green");
     }
 
     @FXML
     protected void rename() {
-        this.getSelectedNodes().forEach(node -> {
-            this.files.remove(node.exportExistingFile());
-            node.rename();
-            this.files.add(node.exportExistingFile());
-        });
+        this.setStatus("正在重命名", "red");
+        boolean success = true;
+        for(FilenameEditorController filenameEditor:this.getSelectedNodes()) {
+            try {
+                //维护去重列表
+                this.files.remove(filenameEditor.exportExistingFile());
+                filenameEditor.rename();
+                this.files.add(filenameEditor.exportExistingFile());
+            } catch (Exception e) {
+                this.setStatus("该文件重命名失败", "red");
+                success = false;
+            }
+        }
+        if(success) this.setStatus("重命名成功", "green");
     }
 }

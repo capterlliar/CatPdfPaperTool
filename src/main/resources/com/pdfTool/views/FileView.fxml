@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.Label?>
 <fx:root type="BorderPane"
          stylesheets="@FileView.css"
          xmlns:fx="http://javafx.com/fxml">
@@ -14,6 +15,12 @@
     </center>
     <bottom>
         <BorderPane fx:id="bottom" prefHeight="30">
+            <top>
+                <HBox>
+                    <HBox HBox.hgrow="ALWAYS"/>
+                    <Label style="-fx-padding: 0 10 5 0" fx:id="status"/>
+                </HBox>
+            </top>
             <left>
                 <CheckBox fx:id="checkBox" text="全选/全不选"></CheckBox>
             </left>

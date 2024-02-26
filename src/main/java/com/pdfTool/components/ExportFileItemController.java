@@ -32,8 +32,7 @@ public class ExportFileItemController extends GridPane {
         this.exportAsMutiFiles.setSelected(false);
         this.exportAsMutiFiles.setDisable(select);
     }
-    public void setFilename(String text, String color) {
-        this.filename.setText(text);
+    public void setFilenameColor(String color) {
         this.filename.setTextFill(Color.valueOf(color));
     }
     public ExportItem getExportItem() {

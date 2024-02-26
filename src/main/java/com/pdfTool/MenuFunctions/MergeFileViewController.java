@@ -1,20 +1,24 @@
 package com.pdfTool.MenuFunctions;
 
+import com.pdfTool.components.FileItemController;
 import com.pdfTool.components.FileListController;
+import com.pdfTool.components.RemovableItemController;
+import com.pdfTool.services.MergeFileTask;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.FileUtil;
-import com.pdfTool.utils.PDFUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class MergeFileViewController extends VBox {
@@ -24,6 +28,8 @@ public class MergeFileViewController extends VBox {
     TextField directory;
     @FXML
     TextField filename;
+    @FXML
+    Label status;
     Stage stage;
     public void show() {
         Scene scene = new Scene(this);
@@ -42,8 +48,22 @@ public class MergeFileViewController extends VBox {
         if(files==null) return;
         this.fileList.addFile(files);
     }
+    private void setStatus(String text, String color) {
+        this.status.setText(text);
+        this.status.setTextFill(Color.valueOf(color));
+    }
     private void init() {
         this.setOnMouseClicked(e -> this.requestFocus());
+    }
+    private List<FileItemController> getFileItems() {
+        return this.fileList.getFileContainer().getChildren().stream()
+                .map(node -> {
+                    Node node1 = ((RemovableItemController)node).getChild();
+                    return ((FileItemController)node1);
+                }).toList();
+    }
+    private List<File> getFiles() {
+        return this.getFileItems().stream().map(FileItemController::getFile).toList();
     }
     public MergeFileViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MergeFileView.fxml"));
@@ -61,7 +81,8 @@ public class MergeFileViewController extends VBox {
     protected String getDirectory() {
         String directory = this.directory.getText();
         if(!FileUtil.checkAndCreateDir(directory)) {
-            //TODO:文件夹不合法警告
+            this.setStatus("目录不合法", "red");
+            return null;
         }
         if(!directory.endsWith(File.separator)) directory += File.separator;
         return directory;
@@ -70,7 +91,8 @@ public class MergeFileViewController extends VBox {
     protected String getFilename() {
         String filename = this.filename.getText();
         if(!FileUtil.isFileNameValid(filename)) {
-            //TODO: 文件名不合法警告
+            this.setStatus("文件名不合法", "red");
+            return null;
         }
         if(!filename.endsWith(".pdf")) filename += ".pdf";
         return filename;
@@ -78,14 +100,31 @@ public class MergeFileViewController extends VBox {
 
     @FXML
     protected void merge() {
-        String dest = this.getDirectory() + this.getFilename();
-        List<File> oldFiles = this.fileList.getFiles();
-        try {
-            PDFUtil.mergeFiles(dest, oldFiles);
-        } catch (IOException e) {
-            //TODO: 合并失败警告
-        }
-        //TODO:导出中和导出成功提示
+        this.setStatus("", "black");
+        String dir = this.getDirectory();
+        String filename = this.getFilename();
+        List<File> oldFiles = this.getFiles();
+        if(dir == null || filename == null || oldFiles == null) return;
+        if(oldFiles.isEmpty()) return;
+
+        String dest = dir + filename;
+
+        this.getFileItems().forEach(fileItemController -> {
+            fileItemController.setFilenameColor("black");
+        });
+
+        MergeFileTask mergeFileTask = new MergeFileTask(dest, oldFiles);
+        mergeFileTask.setOnSucceeded(e -> this.setStatus("合并成功", "green"));
+        mergeFileTask.setOnFailed(e -> this.setStatus("合并失败", "red"));
+        mergeFileTask.messageProperty().addListener((observableValue, s, t1) -> {
+            this.getFileItems().forEach(fileItemController -> {
+                if(fileItemController.getFile().getName().equals(t1)) {
+                    fileItemController.setFilenameColor("green");
+                }
+            });
+        });
+        mergeFileTask.run();
+        this.setStatus("导出中", "black");
     }
 
     @FXML

@@ -27,7 +27,7 @@
     </HBox>
 
     <ScrollPane fitToWidth="true" prefHeight="200">
-        <VBox fx:id="pageChooser" spacing="5"></VBox>
+        <VBox fx:id="exportFileItems" spacing="5"></VBox>
     </ScrollPane>
 
     <HBox>

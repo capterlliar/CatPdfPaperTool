@@ -12,18 +12,22 @@
          xmlns:fx="http://javafx.com/fxml">
     <VBox spacing="5">
         <Text text="选择打印机："/>
-        <ChoiceBox prefWidth="400"/>
-        <HBox>
-            <CheckBox text="双面打印"/>
-            <HBox HBox.hgrow="ALWAYS"/>
-            <Text text="份数："/>
-            <TextField prefWidth="50"/>
-        </HBox>
+        <ChoiceBox fx:id="printerChoiceBox" prefWidth="400"/>
+        <GridPane>
+            <HBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Text text="份数：" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <TextField fx:id="copy" text="1" prefWidth="50" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        </GridPane>
     </VBox>
 
     <Separator/>
 
     <FileListController fx:id="fileList"/>
+
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label fx:id="status"/>
+    </HBox>
 
     <HBox>
         <Button onAction="#addFile" text="添加文件">

@@ -26,6 +26,11 @@
     <FileListController fx:id="fileList"/>
 
     <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label fx:id="status"/>
+    </HBox>
+
+    <HBox>
         <Button onAction="#addFile" text="添加文件">
             <graphic>
                 <FontIcon iconLiteral="fa-plus-square"/>

@@ -1,15 +1,12 @@
-package com.pdfTool.defination;
+package com.pdfTool.services;
 
 import com.pdfTool.defination.PDFWord;
 import com.pdfTool.utils.FileUtil;
-import javafx.util.Pair;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 我们假定论文标题具有以下特点：

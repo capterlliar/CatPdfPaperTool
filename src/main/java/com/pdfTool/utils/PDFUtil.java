@@ -1,7 +1,7 @@
 package com.pdfTool.utils;
 
-import com.pdfTool.defination.PDFFileWriter;
-import com.pdfTool.defination.PDFTitleFilter;
+import com.pdfTool.services.PDFFileWriter;
+import com.pdfTool.services.PDFTitleFilter;
 import com.pdfTool.defination.RenameItem;
 import javafx.util.Pair;
 import org.apache.pdfbox.cos.COSName;

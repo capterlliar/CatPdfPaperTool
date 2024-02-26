@@ -4,7 +4,7 @@ import com.pdfTool.components.ExportFileItemController;
 import com.pdfTool.components.RemovableItemController;
 import com.pdfTool.defination.ExportItem;
 import com.pdfTool.defination.ExportType;
-import com.pdfTool.defination.ExportFileTask;
+import com.pdfTool.services.ExportFileTask;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.FileUtil;
 import javafx.fxml.FXML;
@@ -25,7 +25,7 @@ import java.util.*;
 
 public class ExportFileViewController extends VBox {
     @FXML
-    VBox pageChooser;
+    VBox exportFileItems;
     @FXML
     TextField directory;
     @FXML
@@ -55,10 +55,10 @@ public class ExportFileViewController extends VBox {
     }
     public void addFile(List<File> files){
         files.forEach(file -> {
-            ExportFileItemController pageChooser = new ExportFileItemController(file, this.exportType);
-            RemovableItemController item = new RemovableItemController(this.pageChooser, pageChooser);
-            pageChooser.prefWidthProperty().bind(item.widthProperty());
-            this.pageChooser.getChildren().add(item);
+            ExportFileItemController exportFileItem = new ExportFileItemController(file, this.exportType);
+            RemovableItemController item = new RemovableItemController(this.exportFileItems, exportFileItem);
+            exportFileItem.prefWidthProperty().bind(item.widthProperty());
+            this.exportFileItems.getChildren().add(item);
         });
     }
     private void setStatus(String text, String color) {
@@ -69,6 +69,7 @@ public class ExportFileViewController extends VBox {
         String directory = this.directory.getText();
         if(!FileUtil.checkAndCreateDir(directory)) {
             this.setStatus("导出目录名非法", "red");
+            return null;
         }
         if(!directory.endsWith(File.separator)) directory += File.separator;
         return directory;
@@ -76,10 +77,10 @@ public class ExportFileViewController extends VBox {
     private boolean isexportAsOneFile() {
         return this.exportAsOneFile.isSelected();
     }
-    private List<ExportFileItemController> getPageChoosers() {
-        return this.pageChooser.getChildren().stream().map(node -> {
-            Node pageChooser = ((RemovableItemController)node).getChild();
-            return ((ExportFileItemController)pageChooser);
+    private List<ExportFileItemController> getExportFileItems() {
+        return this.exportFileItems.getChildren().stream().map(node -> {
+            Node exportFileItem = ((RemovableItemController)node).getChild();
+            return ((ExportFileItemController)exportFileItem);
         }).toList();
     }
     private void init(ExportType type) {
@@ -87,8 +88,8 @@ public class ExportFileViewController extends VBox {
         this.setOnMouseClicked(e -> this.requestFocus());
 
         exportAsOneFile.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            this.getPageChoosers().forEach(pageChooser -> {
-                pageChooser.setExportAsMutiFiles(newValue);
+            this.getExportFileItems().forEach(exportFileItem -> {
+                exportFileItem.setExportAsMutiFiles(newValue);
             });
         });
 
@@ -117,10 +118,10 @@ public class ExportFileViewController extends VBox {
         List<File> files = FileChooserUtil.getFiles(this.getScene().getWindow());
         if(files==null) return;
         files.forEach(file -> {
-            ExportFileItemController pageChooser = new ExportFileItemController(file, this.exportType);
-            RemovableItemController item = new RemovableItemController(this.pageChooser, pageChooser);
-            pageChooser.prefWidthProperty().bind(item.widthProperty().add(-50));
-            this.pageChooser.getChildren().add(item);
+            ExportFileItemController exportFileItem = new ExportFileItemController(file, this.exportType);
+            RemovableItemController item = new RemovableItemController(this.exportFileItems, exportFileItem);
+            exportFileItem.prefWidthProperty().bind(item.widthProperty().add(-50));
+            this.exportFileItems.getChildren().add(item);
         });
         stage.sizeToScene();
     }
@@ -129,7 +130,7 @@ public class ExportFileViewController extends VBox {
         this.setStatus("", "black");
         List<ExportItem> exportItems = new ArrayList<>();
         boolean flag = false;
-        for(ExportFileItemController exportFileItemController :this.getPageChoosers()) {
+        for(ExportFileItemController exportFileItemController :this.getExportFileItems()) {
             ExportItem exportItem = exportFileItemController.getExportItem();
             if(exportItem.getSelectedPages() == null) {
                 flag = true;
@@ -141,11 +142,25 @@ public class ExportFileViewController extends VBox {
             this.setStatus("导出页数非法", "red");
             return;
         }
+        String dir = this.getDirectory();
+        if(dir == null) return;
+        if(exportItems.isEmpty()) return;
+
+        this.getExportFileItems().forEach(exportFileItem -> {
+            exportFileItem.setFilenameColor("black");
+        });
 
         ExportFileTask exportFileTask = new ExportFileTask(exportItems, this.exportType,
-                this.getDirectory(), this.isexportAsOneFile());
+                dir, this.isexportAsOneFile());
         exportFileTask.setOnSucceeded(e -> this.setStatus("导出成功", "green"));
         exportFileTask.setOnFailed(e -> this.setStatus("导出失败", "red"));
+        exportFileTask.messageProperty().addListener((observableValue, s, t1) -> {
+            this.getExportFileItems().forEach(exportFileItem -> {
+                if(exportFileItem.getFile().getName().equals(t1)) {
+                    exportFileItem.setFilenameColor("green");
+                }
+            });
+        });
         exportFileTask.run();
         this.setStatus("导出中", "black");
     }
