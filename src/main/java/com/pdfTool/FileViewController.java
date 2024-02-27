@@ -40,26 +40,18 @@ public class FileViewController extends BorderPane {
     TreeItem<HBox> rootNode = null;
     HashSet<File> files;
     Integer cnt=0;
+    public FileViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/FileView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
-    public void loadPaper(List<RenameItem> renameItems) {
-        for(RenameItem renameItem : renameItems){
-            // Prevent duplicated paper.
-            if(files.contains(renameItem.getFile()))
-                continue;
-            files.add(renameItem.getFile());
-
-            renameItem.setId(cnt++);
-            FilenameEditorController content = new FilenameEditorController(renameItem, this);
-            rootNode.getChildren().add(content);
+        try {
+            fxmlLoader.load();
+            init();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
         }
     }
-
-    public void focusOn(TreeItem<HBox> treeItem) {
-        int i = this.treeView.getRow(treeItem);
-        this.treeView.scrollTo(i);
-        this.treeView.getSelectionModel().select(treeItem);
-    }
-
     private void init() {
         INSTANCE = this;
         // To initialize treeView.
@@ -83,38 +75,38 @@ public class FileViewController extends BorderPane {
         }
         checkBox.selectedProperty().addListener((observableValue, oldValue, newValue) ->
                 this.rootNode.getChildren().forEach(node ->
-                    ((FilenameEditorController)node).select(newValue)));
+                        ((FilenameEditorController)node).select(newValue)));
     }
+    public void loadPaper(List<RenameItem> renameItems) {
+        for(RenameItem renameItem : renameItems){
+            // Prevent duplicated paper.
+            if(files.contains(renameItem.getFile()))
+                continue;
+            files.add(renameItem.getFile());
 
+            renameItem.setId(cnt++);
+            FilenameEditorController content = new FilenameEditorController(renameItem, this);
+            rootNode.getChildren().add(content);
+        }
+    }
+    public void focusOn(TreeItem<HBox> treeItem) {
+        int i = this.treeView.getRow(treeItem);
+        this.treeView.scrollTo(i);
+        this.treeView.getSelectionModel().select(treeItem);
+    }
+    public void remove(FilenameEditorController child) {
+        this.rootNode.getChildren().remove(child);
+        this.files.remove(child.exportExistingFile());
+    }
+    public List<File> exportSelectedFiles() {
+        return this.getSelectedNodes().stream().map(FilenameEditorController::exportExistingFile).toList();
+    }
     private List<FilenameEditorController> getSelectedNodes() {
         return  this.rootNode.getChildren().stream()
                 .filter(node -> ((FilenameEditorController)node).selected())
                 .map(node -> ((FilenameEditorController)node)).toList();
 
     }
-
-    public void remove(FilenameEditorController child) {
-        this.rootNode.getChildren().remove(child);
-        this.files.remove(child.exportExistingFile());
-    }
-
-    public List<File> exportSelectedFiles() {
-        return this.getSelectedNodes().stream().map(FilenameEditorController::exportExistingFile).toList();
-    }
-
-    public FileViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/FileView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init();
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     private void clearAll() {
         this.rootNode.getChildren().removeAll(this.rootNode.getChildren());
         this.files.clear();

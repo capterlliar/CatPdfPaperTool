@@ -18,6 +18,18 @@ public class FileListController extends VBox {
     @FXML
     Label cnt;
     int fileNum;
+    public FileListController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FileList.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+            init();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
     private void init() {
         this.fileNum = 0;
         this.fileContainer.getChildren().addListener((ListChangeListener<Node>) change -> {
@@ -32,19 +44,6 @@ public class FileListController extends VBox {
             }
         });
     }
-    public FileListController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FileList.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init();
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     public void addFile(List<File> files) {
         files.forEach(file -> {
             FileItemController fileItem = new FileItemController(file);

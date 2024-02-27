@@ -15,7 +15,22 @@ public class PDFViewController extends HBox {
         return INSTANCE;
     }
     SampleViewer sampleViewer = null;
+    public PDFViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/PDFView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
+        try {
+            fxmlLoader.load();
+            init();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+    private void init() {
+        INSTANCE = this;
+        this.getChildren().add(new Label("预览PDF"));
+    }
     public void loadPDF(String path){
         this.getChildren().removeAll(this.getChildren());
         try {
@@ -32,24 +47,6 @@ public class PDFViewController extends HBox {
         } catch (Exception e) {
             Label label = new Label("打开失败，请检查文件格式");
             this.getChildren().add(label);
-        }
-    }
-
-    private void init() {
-        INSTANCE = this;
-        this.getChildren().add(new Label("预览PDF"));
-    }
-
-    public PDFViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/PDFView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init();
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
         }
     }
 }

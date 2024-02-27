@@ -35,6 +35,24 @@ public class PrintViewController extends VBox {
     @FXML
     Label status;
     Stage stage;
+    public PrintViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PrintView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+            init();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+    private void init() {
+        List<PrintService> printServices = PrinterUtil.getPrintServices();
+        this.printerChoiceBox.getItems().addAll(printServices);
+        this.printerChoiceBox.setValue(printServices.get(0));
+        this.setOnMouseClicked(e -> this.requestFocus());
+    }
     public void show() {
         Scene scene = new Scene(this);
 
@@ -70,24 +88,6 @@ public class PrintViewController extends VBox {
     }
     private List<File> getFiles() {
         return this.getFileItems().stream().map(FileItemController::getFile).toList();
-    }
-    private void init() {
-        List<PrintService> printServices = PrinterUtil.getPrintServices();
-        this.printerChoiceBox.getItems().addAll(printServices);
-        this.printerChoiceBox.setValue(printServices.get(0));
-        this.setOnMouseClicked(e -> this.requestFocus());
-    }
-    public PrintViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PrintView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init();
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
     }
 
     @FXML

@@ -7,10 +7,6 @@ import javafx.scene.layout.BorderPane;
 public class PrimaryViewController extends BorderPane {
     @FXML PDFViewController pdfViewController;
     @FXML FileViewController fileViewController;
-    private void init(){
-        pdfViewController.prefWidthProperty().bind(this.widthProperty().multiply(0.7));
-        fileViewController.prefWidthProperty().bind(this.widthProperty().multiply(0.3));
-    }
     public PrimaryViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/PrimaryView.fxml"));
         fxmlLoader.setRoot(this);
@@ -22,5 +18,9 @@ public class PrimaryViewController extends BorderPane {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+    private void init(){
+        pdfViewController.prefWidthProperty().bind(this.widthProperty().multiply(0.7));
+        fileViewController.prefWidthProperty().bind(this.widthProperty().multiply(0.3));
     }
 }

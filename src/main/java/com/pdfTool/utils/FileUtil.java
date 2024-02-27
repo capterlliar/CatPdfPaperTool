@@ -127,12 +127,15 @@ public final class FileUtil {
             //e.g. "9"
             if(s3.length == 1){
                 int i = Integer.parseInt(s3[0].trim());
+                if(i <= 0) return null;
                 res.add(new Pair<>(i, i));
             }
             //e.g. "3-4", "-4"
             else if(s3.length == 2){
+                if(s3[0].trim().equals("") || s3[1].trim().equals("")) return null;
                 int from = Integer.parseInt(s3[0].trim());
                 int to = Integer.parseInt(s3[1].trim());
+                if(from <= 0 || to <= 0) return null;
                 if(from <= to) res.add(new Pair<>(from,to));
                 else {
                     return null;

@@ -12,17 +12,6 @@ public class FilenameOptionController extends TreeItem<HBox> {
     @FXML
     HBox value;
     FilenameEditorController parent;
-    public String getText() {
-        return this.textArea.getText();
-    }
-    public void setText(String s) {
-        this.textArea.setText(s);
-    }
-    private void init(String fileNameOption, FilenameEditorController parent) {
-        this.parent = parent;
-        this.setText(fileNameOption);
-        this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-85));
-    }
     public FilenameOptionController(String fileNameOption, FilenameEditorController parent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameOption.fxml"));
         fxmlLoader.setRoot(this);
@@ -34,6 +23,17 @@ public class FilenameOptionController extends TreeItem<HBox> {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+    private void init(String fileNameOption, FilenameEditorController parent) {
+        this.parent = parent;
+        this.setText(fileNameOption);
+        this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-85));
+    }
+    public String getText() {
+        return this.textArea.getText();
+    }
+    public void setText(String s) {
+        this.textArea.setText(s);
     }
 
     @FXML

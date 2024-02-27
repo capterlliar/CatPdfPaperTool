@@ -54,7 +54,7 @@ public final class PDFUtil {
         pdfMerger.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
     }
 
-    public static List<File> splitAsMutiFiles(List<Pair<Integer, Integer>> pages, File file, String destDir) throws  IOException {
+    public static List<File> splitAsMutiFiles(List<Pair<Integer, Integer>> pages, File file, String destDir) throws IOException {
         if(splitter == null) {
             splitter = new Splitter();
         }

@@ -29,6 +29,26 @@ public class FilenameEditorController extends TreeItem<HBox> {
     Label warning;
     RenameItem renameItem;
     FileViewController parent;
+    public FilenameEditorController(RenameItem renameItem, FileViewController parent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameEditor.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+            init(renameItem,parent);
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+    private void init(RenameItem renameItem, FileViewController parent) {
+        this.renameItem = renameItem;
+        this.parent = parent;
+        this.warning.setVisible(false);
+        this.setText(renameItem.getFile().getName());
+        this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
+        this.expandedProperty().addListener((observableValue, aBoolean, t1) -> this.parent.focusOn(this));
+    }
     public String getText() {
         return this.textArea.getText();
     }
@@ -52,11 +72,9 @@ public class FilenameEditorController extends TreeItem<HBox> {
     public File exportNewFile() {
         return new File(this.getNewPath());
     }
-
     public File exportExistingFile() {
         return this.renameItem.getFile();
     }
-
     public void rename() throws RuntimeException {
         this.warning.setVisible(false);
 
@@ -72,7 +90,6 @@ public class FilenameEditorController extends TreeItem<HBox> {
             throw new RuntimeException();
         }
     }
-
     public void modify() throws RuntimeException {
         this.warning.setVisible(false);
         this.getChildren().removeAll(this.getChildren());
@@ -94,33 +111,11 @@ public class FilenameEditorController extends TreeItem<HBox> {
         this.setExpanded(false);
     }
 
-    private void init(RenameItem renameItem, FileViewController parent) {
-        this.renameItem = renameItem;
-        this.parent = parent;
-        this.warning.setVisible(false);
-        this.setText(renameItem.getFile().getName());
-        this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
-        this.expandedProperty().addListener((observableValue, aBoolean, t1) -> this.parent.focusOn(this));
-    }
-    public FilenameEditorController(RenameItem renameItem, FileViewController parent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FilenameEditor.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init(renameItem,parent);
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     @FXML
     protected void openPDF() {
         PDFViewController.getInstance().loadPDF(this.renameItem.getFile().getPath());
         this.parent.focusOn(this);
     }
-
     @FXML
     protected void remove() {
         this.parent.remove(this);
