@@ -11,11 +11,6 @@ public class RemovableItemController extends GridPane {
     VBox parent = null;
     @Getter
     Node child = null;
-    private void init(VBox parent, Node child) {
-        this.parent = parent;
-        this.child = child;
-        this.add(child,1,0);
-    }
     public RemovableItemController(VBox parent, Node child) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RemovableItem.fxml"));
         fxmlLoader.setRoot(this);
@@ -27,6 +22,11 @@ public class RemovableItemController extends GridPane {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+    private void init(VBox parent, Node child) {
+        this.parent = parent;
+        this.child = child;
+        this.add(child,1,0);
     }
 
     @FXML

@@ -9,13 +9,13 @@ import java.io.File;
 public class FileItemController extends Label {
     @Getter
     File file;
-    public void setFilenameColor(String color) {
-        this.setTextFill(Color.valueOf(color));
-    }
     public FileItemController(File file) {
         this.file = file;
         this.setWrapText(true);
         this.setStyle("-fx-text-overrun: ellipsis;");
         this.setText(file.getName());
+    }
+    public void setFilenameColor(String color) {
+        this.setTextFill(Color.valueOf(color));
     }
 }

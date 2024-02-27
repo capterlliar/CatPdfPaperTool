@@ -28,6 +28,32 @@ public class ExportFileItemController extends GridPane {
     ExportType exportType;
     @Getter
     File file;
+    public ExportFileItemController(File file, ExportType exportType) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ExportFileItem.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+            init(file, exportType);
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+    private void init(File file, ExportType exportType) {
+        this.exportType = exportType;
+        this.file = file;
+
+        this.filename = new Label(file.getName());
+        this.filename.setStyle("-fx-text-overrun: ellipsis;");
+        this.filename.prefWidthProperty().bind(this.widthProperty().add(-100));
+        GridPane.isFillWidth(this.filename);
+        this.add(this.filename, 0,0);
+
+        if(this.exportType == ExportType.IMAGE) {
+            this.exportAsMutiFiles.setVisible(false);
+        }
+    }
     public void setExportAsMutiFiles(boolean select) {
         this.exportAsMutiFiles.setSelected(false);
         this.exportAsMutiFiles.setDisable(select);
@@ -49,31 +75,5 @@ public class ExportFileItemController extends GridPane {
     }
     private boolean isExportedAsMutiFiles() {
         return this.exportAsMutiFiles.isSelected();
-    }
-    private void init(File file, ExportType exportType) {
-        this.exportType = exportType;
-        this.file = file;
-
-        this.filename = new Label(file.getName());
-        this.filename.setStyle("-fx-text-overrun: ellipsis;");
-        this.filename.prefWidthProperty().bind(this.widthProperty().add(-100));
-        GridPane.isFillWidth(this.filename);
-        this.add(this.filename, 0,0);
-
-        if(this.exportType == ExportType.IMAGE) {
-            this.exportAsMutiFiles.setVisible(false);
-        }
-    }
-    public ExportFileItemController(File file, ExportType exportType) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ExportFileItem.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init(file, exportType);
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
     }
 }

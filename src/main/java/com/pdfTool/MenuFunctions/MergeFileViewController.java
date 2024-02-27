@@ -33,6 +33,21 @@ public class MergeFileViewController extends VBox {
     @FXML
     Label status;
     Stage stage;
+    public MergeFileViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MergeFileView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+            init();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+    private void init() {
+        this.setOnMouseClicked(e -> this.requestFocus());
+    }
     public void show() {
         Scene scene = new Scene(this);
 
@@ -54,9 +69,6 @@ public class MergeFileViewController extends VBox {
         this.status.setText(text);
         this.status.setTextFill(Color.valueOf(color));
     }
-    private void init() {
-        this.setOnMouseClicked(e -> this.requestFocus());
-    }
     private List<FileItemController> getFileItems() {
         return this.fileList.getFileContainer().getChildren().stream()
                 .map(node -> {
@@ -67,20 +79,7 @@ public class MergeFileViewController extends VBox {
     private List<File> getFiles() {
         return this.getFileItems().stream().map(FileItemController::getFile).toList();
     }
-    public MergeFileViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MergeFileView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init();
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    protected String getDirectory() {
+    private String getDirectory() {
         String directory = this.directory.getText();
         if(!FileUtil.checkAndCreateDir(directory)) {
             this.setStatus("目录不合法", "red");
@@ -90,7 +89,7 @@ public class MergeFileViewController extends VBox {
         return directory;
     }
 
-    protected String getFilename() {
+    private String getFilename() {
         String filename = this.filename.getText();
         if(!FileUtil.isFileNameValid(filename)) {
             this.setStatus("文件名不合法", "red");

@@ -40,6 +40,36 @@ public class ExportFileViewController extends VBox {
     Label status;
     ExportType exportType;
     Stage stage;
+    public ExportFileViewController(ExportType type) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ExportFileView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+            init(type);
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+    private void init(ExportType type) {
+        this.exportType = type;
+        this.setOnMouseClicked(e -> this.requestFocus());
+
+        exportAsOneFile.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+            this.getExportFileItems().forEach(exportFileItem -> {
+                exportFileItem.setExportAsMutiFiles(newValue);
+            });
+        });
+
+        switch (this.exportType) {
+            case SPLIT, TEXT -> this.text1.setText("将所有所选内容导出到一个文件  ");
+            case IMAGE -> {
+                this.text1.setText("将所有所选内容导出到一个目录  ");
+                this.text2.setVisible(false);
+            }
+        }
+    }
     public void show() {
         Scene scene = new Scene(this);
 
@@ -85,36 +115,7 @@ public class ExportFileViewController extends VBox {
             return ((ExportFileItemController)exportFileItem);
         }).toList();
     }
-    private void init(ExportType type) {
-        this.exportType = type;
-        this.setOnMouseClicked(e -> this.requestFocus());
 
-        exportAsOneFile.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            this.getExportFileItems().forEach(exportFileItem -> {
-                exportFileItem.setExportAsMutiFiles(newValue);
-            });
-        });
-
-        switch (this.exportType) {
-            case SPLIT, TEXT -> this.text1.setText("将所有所选内容导出到一个文件  ");
-            case IMAGE -> {
-                this.text1.setText("将所有所选内容导出到一个目录  ");
-                this.text2.setVisible(false);
-            }
-        }
-    }
-    public ExportFileViewController(ExportType type) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ExportFileView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-            init(type);
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
-    }
     @FXML
     protected void addFile() {
         List<File> files = FileChooserUtil.getFiles(this.getScene().getWindow());
