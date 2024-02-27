@@ -19,10 +19,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j;
 
 import java.io.File;
 import java.util.*;
 
+@Log4j
 public class ExportFileViewController extends VBox {
     @FXML
     VBox exportFileItems;
@@ -152,7 +154,12 @@ public class ExportFileViewController extends VBox {
         ExportFileTask exportFileTask = new ExportFileTask(exportItems, this.exportType,
                 dir, this.isexportAsOneFile());
         exportFileTask.setOnSucceeded(e -> this.setStatus("导出成功", "green"));
-        exportFileTask.setOnFailed(e -> this.setStatus("导出失败", "red"));
+        exportFileTask.setOnFailed(e -> {
+            this.setStatus("导出失败", "red");
+            Throwable exc = exportFileTask.getException();
+            log.error(exc);
+            exc.printStackTrace();
+        });
         exportFileTask.setOnRunning(e -> this.setStatus("导出中", "black"));
         exportFileTask.messageProperty().addListener((observableValue, s, t1) -> {
             this.getExportFileItems().forEach(exportFileItem -> {

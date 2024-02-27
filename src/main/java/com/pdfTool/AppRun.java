@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 
 public class AppRun extends Application {
@@ -27,6 +29,8 @@ public class AppRun extends Application {
     }
 
     public static void main(String[] args){
+        Logger.getLogger("org.apache.pdfbox").setLevel(Level.OFF);
+        Logger.getLogger("org.apache.fontbox").setLevel(Level.OFF);
         Application.launch(args);
     }
 }

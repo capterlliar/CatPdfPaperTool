@@ -6,11 +6,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Label?>
 <fx:root type="TreeItem"
          fx:id="singleFileViewer"
          xmlns:fx="http://javafx.com/fxml">
     <value>
         <HBox fx:id="value" stylesheets="@FilenameEditor.css" spacing="5">
+            <Label fx:id="warning" text="!" textFill="red"/>
             <CheckBox fx:id="checkBox"/>
             <TextArea prefWidth="200" wrapText="true" prefRowCount="3" fx:id="textArea"/>
             <HBox fx:id="buttons" spacing="2">

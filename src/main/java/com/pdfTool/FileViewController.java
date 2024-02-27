@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import lombok.extern.log4j.Log4j;
 
 import java.io.File;
 import java.util.HashSet;
@@ -22,6 +23,7 @@ import java.util.List;
     The new name options will be displayed as children of the original paper item.
  */
 
+@Log4j
 public class FileViewController extends BorderPane {
     // Not common singleton pattern. We can guarantee that the class only be loaded once.
     // Just provide a way to access the created instance in MenuView.
@@ -126,7 +128,12 @@ public class FileViewController extends BorderPane {
     protected void modify() {
         GetNameOptionsTask getNameOptionsTask = new GetNameOptionsTask(this.getSelectedNodes());
         getNameOptionsTask.setOnSucceeded(e -> this.setStatus("获取成功", "green"));
-        getNameOptionsTask.setOnFailed(e -> this.setStatus("该文件错误", "red"));
+        getNameOptionsTask.setOnFailed(e -> {
+            this.setStatus("该文件错误", "red");
+            Throwable exc = getNameOptionsTask.getException();
+            log.error(exc);
+            exc.printStackTrace();
+        });
         getNameOptionsTask.setOnRunning(e -> this.setStatus("获取论文标题中...", "black"));
 
         Thread thread = new Thread(getNameOptionsTask);
@@ -148,6 +155,9 @@ public class FileViewController extends BorderPane {
             this.setStatus("该文件重命名失败", "red");
             this.getSelectedNodes().forEach(filenameEditor ->
                     this.files.add(filenameEditor.exportExistingFile()));
+            Throwable exc = renameTask.getException();
+            log.error(exc);
+            exc.printStackTrace();
         });
         renameTask.setOnRunning(e -> this.setStatus("正在重命名", "black"));
 

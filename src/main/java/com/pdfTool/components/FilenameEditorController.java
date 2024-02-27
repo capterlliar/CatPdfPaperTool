@@ -8,13 +8,16 @@ import com.pdfTool.utils.PDFUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
+import lombok.extern.log4j.Log4j;
 
 import java.io.File;
 import java.util.List;
 
+@Log4j
 public class FilenameEditorController extends TreeItem<HBox> {
     @FXML
     TextArea textArea;
@@ -22,6 +25,8 @@ public class FilenameEditorController extends TreeItem<HBox> {
     HBox value;
     @FXML
     CheckBox checkBox;
+    @FXML
+    Label warning;
     RenameItem renameItem;
     FileViewController parent;
     public String getText() {
@@ -53,7 +58,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
     }
 
     public void rename() throws RuntimeException {
-        this.textArea.setStyle("-fx-border-color: #e7e7e7;");
+        this.warning.setVisible(false);
 
         File newFile = this.exportNewFile();
         boolean renamed = FileUtil.rename(this.exportExistingFile(), newFile);
@@ -63,19 +68,18 @@ public class FilenameEditorController extends TreeItem<HBox> {
             this.getChildren().removeAll(this.getChildren());
         }
         else {
-            this.textArea.setStyle("-fx-border-color: red");
+            this.warning.setVisible(true);
             throw new RuntimeException();
         }
     }
 
     public void modify() throws RuntimeException {
-        this.textArea.setStyle("-fx-border-color: #e7e7e7;");
-
+        this.warning.setVisible(false);
         this.getChildren().removeAll(this.getChildren());
         try {
             PDFUtil.setNewName(this.renameItem);
         } catch (Exception e) {
-            this.textArea.setStyle("-fx-border-color: red");
+            this.warning.setVisible(true);
             throw new RuntimeException();
         }
         List<String> options = this.renameItem.getOptions();
@@ -93,6 +97,7 @@ public class FilenameEditorController extends TreeItem<HBox> {
     private void init(RenameItem renameItem, FileViewController parent) {
         this.renameItem = renameItem;
         this.parent = parent;
+        this.warning.setVisible(false);
         this.setText(renameItem.getFile().getName());
         this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
         this.expandedProperty().addListener((observableValue, aBoolean, t1) -> this.parent.focusOn(this));

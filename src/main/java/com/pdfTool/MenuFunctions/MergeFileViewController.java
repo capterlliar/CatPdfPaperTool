@@ -17,10 +17,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j;
 
 import java.io.File;
 import java.util.List;
 
+@Log4j
 public class MergeFileViewController extends VBox {
     @FXML
     FileListController fileList;
@@ -114,7 +116,12 @@ public class MergeFileViewController extends VBox {
 
         MergeFileTask mergeFileTask = new MergeFileTask(dest, oldFiles);
         mergeFileTask.setOnSucceeded(e -> this.setStatus("合并成功", "green"));
-        mergeFileTask.setOnFailed(e -> this.setStatus("合并失败", "red"));
+        mergeFileTask.setOnFailed(e -> {
+            this.setStatus("合并失败", "red");
+            Throwable exc = mergeFileTask.getException();
+            log.error(exc);
+            exc.printStackTrace();
+        });
         mergeFileTask.setOnRunning(e -> this.setStatus("导出中", "black"));
         mergeFileTask.messageProperty().addListener((observableValue, s, t1) -> {
             this.getFileItems().forEach(fileItemController -> {

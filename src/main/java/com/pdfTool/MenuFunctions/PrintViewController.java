@@ -18,11 +18,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j;
 
 import javax.print.PrintService;
 import java.io.File;
 import java.util.List;
 
+@Log4j
 public class PrintViewController extends VBox {
     @FXML
     FileListController fileList;
@@ -102,7 +104,12 @@ public class PrintViewController extends VBox {
 
         PrintFileTask printFileTask = new PrintFileTask(files, printService, copies.intValue());
         printFileTask.setOnSucceeded(e -> this.setStatus("打印成功", "green"));
-        printFileTask.setOnFailed(e -> this.setStatus("打印失败", "red"));
+        printFileTask.setOnFailed(e -> {
+            this.setStatus("打印失败", "red");
+            Throwable exc = printFileTask.getException();
+            log.error(exc);
+            exc.printStackTrace();
+        });
         printFileTask.setOnRunning(e -> this.setStatus("打印中", "black"));
         printFileTask.messageProperty().addListener((observableValue, s, t1) -> {
             this.getFileItems().forEach(fileItemController -> {
