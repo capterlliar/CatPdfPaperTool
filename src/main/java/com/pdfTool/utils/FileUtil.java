@@ -68,27 +68,21 @@ public final class FileUtil {
         return filename;
     }
 
-    public static List<String> GetDirFiles(final String dirName) {
-        final File file = new File(dirName);
-        List<String> output = new ArrayList<String>();
-        output = ergodic(file, output);
-        return output;
-    }
+    public static List<File> GetDirFiles(File dir) {
+        File[] fileList = dir.listFiles();
+        if(fileList == null) return null;
 
-    private static List<String> ergodic(final File file, final List<String> resultFileName) {
-        final File[] files = file.listFiles();
-        if (files == null) {
-            return resultFileName;
-        }
-        for (final File f : files) {
-            if (f.isDirectory()) {
-                ergodic(f, resultFileName);
+        List<File> output = new ArrayList<>();
+        for(File file:fileList) {
+            if(file.isDirectory()) {
+                List<File> res = GetDirFiles(file);
+                if(res != null) output.addAll(res);
             }
-            else {
-                resultFileName.add(f.getPath());
+            else if(file.isFile() && file.getName().endsWith(".pdf")) {
+                output.add(file);
             }
         }
-        return resultFileName;
+        return output;
     }
 
     public static String JoinString(final List<String> list, final String conjunction) {

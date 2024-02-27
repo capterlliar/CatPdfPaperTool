@@ -35,6 +35,15 @@ public class MenuViewController extends HBox {
     }
 
     @FXML
+    protected void importDir(){
+        File dir = FileChooserUtil.getDirectory(this.getScene().getWindow());
+        if(dir==null) return;
+        List<File> files = FileUtil.GetDirFiles(dir);
+        if(files == null) return;
+        FileViewController.getInstance().loadPaper(FileUtil.filesToPapers(files));
+    }
+
+    @FXML
     protected void mergePDF(){
         MergeFileViewController merge = new MergeFileViewController();
         merge.addFile(FileViewController.getInstance().exportSelectedFiles());

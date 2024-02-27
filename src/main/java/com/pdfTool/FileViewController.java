@@ -2,6 +2,8 @@ package com.pdfTool;
 
 import com.pdfTool.components.FilenameEditorController;
 import com.pdfTool.defination.RenameItem;
+import com.pdfTool.services.GetNameOptionsTask;
+import com.pdfTool.services.RenameTask;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -51,7 +53,8 @@ public class FileViewController extends BorderPane {
     }
 
     public void focusOn(TreeItem<HBox> treeItem) {
-        this.treeView.getSelectionModel().clearSelection();
+        int i = this.treeView.getRow(treeItem);
+        this.treeView.scrollTo(i);
         this.treeView.getSelectionModel().select(treeItem);
     }
 
@@ -121,34 +124,34 @@ public class FileViewController extends BorderPane {
 
     @FXML
     protected void modify() {
-        this.setStatus("获取论文标题中...", "black");
-        boolean success = true;
-        for(FilenameEditorController filenameEditor:this.getSelectedNodes()) {
-            try{
-                filenameEditor.modify();
-            } catch (Exception e) {
-                this.setStatus("该文件错误", "red");
-                success = false;
-            }
-        }
-        if(success) this.setStatus("获取成功", "green");
+        GetNameOptionsTask getNameOptionsTask = new GetNameOptionsTask(this.getSelectedNodes());
+        getNameOptionsTask.setOnSucceeded(e -> this.setStatus("获取成功", "green"));
+        getNameOptionsTask.setOnFailed(e -> this.setStatus("该文件错误", "red"));
+        getNameOptionsTask.setOnRunning(e -> this.setStatus("获取论文标题中...", "black"));
+
+        Thread thread = new Thread(getNameOptionsTask);
+        thread.start();
+        //TODO:thread pool
     }
 
     @FXML
     protected void rename() {
-        this.setStatus("正在重命名", "red");
-        boolean success = true;
-        for(FilenameEditorController filenameEditor:this.getSelectedNodes()) {
-            try {
-                //维护去重列表
-                this.files.remove(filenameEditor.exportExistingFile());
-                filenameEditor.rename();
-                this.files.add(filenameEditor.exportExistingFile());
-            } catch (Exception e) {
-                this.setStatus("该文件重命名失败", "red");
-                success = false;
-            }
-        }
-        if(success) this.setStatus("重命名成功", "green");
+        this.getSelectedNodes().forEach(filenameEditor ->
+                this.files.remove(filenameEditor.exportExistingFile()));
+        RenameTask renameTask = new RenameTask(this.getSelectedNodes());
+        renameTask.setOnSucceeded(e -> {
+            this.setStatus("重命名成功", "green");
+            this.getSelectedNodes().forEach(filenameEditor ->
+                    this.files.add(filenameEditor.exportExistingFile()));
+        });
+        renameTask.setOnFailed(e -> {
+            this.setStatus("该文件重命名失败", "red");
+            this.getSelectedNodes().forEach(filenameEditor ->
+                    this.files.add(filenameEditor.exportExistingFile()));
+        });
+        renameTask.setOnRunning(e -> this.setStatus("正在重命名", "black"));
+
+        Thread thread = new Thread(renameTask);
+        thread.start();
     }
 }

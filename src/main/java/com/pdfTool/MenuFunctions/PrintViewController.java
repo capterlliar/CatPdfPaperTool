@@ -90,7 +90,6 @@ public class PrintViewController extends VBox {
 
     @FXML
     protected void print() {
-        this.setStatus("", "black");
         PrintService printService = this.getSelectedPrintService();
         Integer copies = this.getCopies();
         List<File> files = this.getFiles();
@@ -104,6 +103,7 @@ public class PrintViewController extends VBox {
         PrintFileTask printFileTask = new PrintFileTask(files, printService, copies.intValue());
         printFileTask.setOnSucceeded(e -> this.setStatus("打印成功", "green"));
         printFileTask.setOnFailed(e -> this.setStatus("打印失败", "red"));
+        printFileTask.setOnRunning(e -> this.setStatus("打印中", "black"));
         printFileTask.messageProperty().addListener((observableValue, s, t1) -> {
             this.getFileItems().forEach(fileItemController -> {
                 if(fileItemController.getFile().getName().equals(t1)) {
@@ -111,8 +111,8 @@ public class PrintViewController extends VBox {
                 }
             });
         });
-        printFileTask.run();
-        this.setStatus("打印中", "black");
+        Thread thread = new Thread(printFileTask);
+        thread.start();
     }
 
     @FXML

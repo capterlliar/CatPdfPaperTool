@@ -127,7 +127,6 @@ public class ExportFileViewController extends VBox {
     }
     @FXML
     protected void export() {
-        this.setStatus("", "black");
         List<ExportItem> exportItems = new ArrayList<>();
         boolean flag = false;
         for(ExportFileItemController exportFileItemController :this.getExportFileItems()) {
@@ -154,6 +153,7 @@ public class ExportFileViewController extends VBox {
                 dir, this.isexportAsOneFile());
         exportFileTask.setOnSucceeded(e -> this.setStatus("导出成功", "green"));
         exportFileTask.setOnFailed(e -> this.setStatus("导出失败", "red"));
+        exportFileTask.setOnRunning(e -> this.setStatus("导出中", "black"));
         exportFileTask.messageProperty().addListener((observableValue, s, t1) -> {
             this.getExportFileItems().forEach(exportFileItem -> {
                 if(exportFileItem.getFile().getName().equals(t1)) {
@@ -161,8 +161,9 @@ public class ExportFileViewController extends VBox {
                 }
             });
         });
-        exportFileTask.run();
-        this.setStatus("导出中", "black");
+
+        Thread thread = new Thread(exportFileTask);
+        thread.start();
     }
 
     @FXML

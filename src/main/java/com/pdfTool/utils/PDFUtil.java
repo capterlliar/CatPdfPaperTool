@@ -34,7 +34,14 @@ public final class PDFUtil {
         titleFilter.setStartPage(0);
         titleFilter.setEndPage(1);
         titleFilter.getText(document);
-        renameItem.setOptions(titleFilter.getTitle());
+
+        List<String> options = new ArrayList<>(titleFilter.getTitle());
+        String title = document.getDocumentInformation().getTitle();
+        if(title != null){
+            if(!title.trim().equals("")) options.add(title);
+        }
+        renameItem.setOptions(options);
+
         document.close();
     }
 
@@ -143,7 +150,6 @@ public final class PDFUtil {
             output.close();
         }
         document.close();
-        //TODO：消除文本换行符
     }
     public static void getTextAsOneFile(List<Pair<Integer, Integer>> pages, File file, String dest) throws IOException {
         PDDocument document = PDDocument.load(file);

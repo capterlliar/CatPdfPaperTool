@@ -100,7 +100,6 @@ public class MergeFileViewController extends VBox {
 
     @FXML
     protected void merge() {
-        this.setStatus("", "black");
         String dir = this.getDirectory();
         String filename = this.getFilename();
         List<File> oldFiles = this.getFiles();
@@ -116,6 +115,7 @@ public class MergeFileViewController extends VBox {
         MergeFileTask mergeFileTask = new MergeFileTask(dest, oldFiles);
         mergeFileTask.setOnSucceeded(e -> this.setStatus("合并成功", "green"));
         mergeFileTask.setOnFailed(e -> this.setStatus("合并失败", "red"));
+        mergeFileTask.setOnRunning(e -> this.setStatus("导出中", "black"));
         mergeFileTask.messageProperty().addListener((observableValue, s, t1) -> {
             this.getFileItems().forEach(fileItemController -> {
                 if(fileItemController.getFile().getName().equals(t1)) {
@@ -123,8 +123,8 @@ public class MergeFileViewController extends VBox {
                 }
             });
         });
-        mergeFileTask.run();
-        this.setStatus("导出中", "black");
+        Thread thread = new Thread(mergeFileTask);
+        thread.start();
     }
 
     @FXML
