@@ -1,6 +1,6 @@
 package com.pdfTool;
 
-import com.pdfTool.components.FilenameEditorController;
+import com.pdfTool.components.FilenameEditor;
 import com.pdfTool.defination.RenameItem;
 import com.pdfTool.services.GetNameOptionsTask;
 import com.pdfTool.services.RenameTask;
@@ -75,7 +75,7 @@ public class FileViewController extends BorderPane {
         }
         checkBox.selectedProperty().addListener((observableValue, oldValue, newValue) ->
                 this.rootNode.getChildren().forEach(node ->
-                        ((FilenameEditorController)node).select(newValue)));
+                        ((FilenameEditor)node).select(newValue)));
     }
     public void loadPaper(List<RenameItem> renameItems) {
         for(RenameItem renameItem : renameItems){
@@ -85,7 +85,7 @@ public class FileViewController extends BorderPane {
             files.add(renameItem.getFile());
 
             renameItem.setId(cnt++);
-            FilenameEditorController content = new FilenameEditorController(renameItem, this);
+            FilenameEditor content = new FilenameEditor(renameItem, this);
             rootNode.getChildren().add(content);
         }
     }
@@ -94,17 +94,17 @@ public class FileViewController extends BorderPane {
         this.treeView.scrollTo(i);
         this.treeView.getSelectionModel().select(treeItem);
     }
-    public void remove(FilenameEditorController child) {
+    public void remove(FilenameEditor child) {
         this.rootNode.getChildren().remove(child);
         this.files.remove(child.exportExistingFile());
     }
     public List<File> exportSelectedFiles() {
-        return this.getSelectedNodes().stream().map(FilenameEditorController::exportExistingFile).toList();
+        return this.getSelectedNodes().stream().map(FilenameEditor::exportExistingFile).toList();
     }
-    private List<FilenameEditorController> getSelectedNodes() {
+    private List<FilenameEditor> getSelectedNodes() {
         return  this.rootNode.getChildren().stream()
-                .filter(node -> ((FilenameEditorController)node).selected())
-                .map(node -> ((FilenameEditorController)node)).toList();
+                .filter(node -> ((FilenameEditor)node).selected())
+                .map(node -> ((FilenameEditor)node)).toList();
 
     }
     private void clearAll() {

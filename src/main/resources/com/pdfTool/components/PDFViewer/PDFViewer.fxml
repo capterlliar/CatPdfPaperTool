@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.HBox?>
+<fx:root type="BorderPane"
+         stylesheets="@PDFViewer.css"
+         styleClass="sample-viewer"
+         xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <HBox fx:id="toolBar" styleClass="toolbar" prefHeight="75d" spacing="20" alignment="CENTER">
+
+        </HBox>
+    </top>
+    <center>
+        <SplitPane fx:id="splitPane"/>
+    </center>
+</fx:root>

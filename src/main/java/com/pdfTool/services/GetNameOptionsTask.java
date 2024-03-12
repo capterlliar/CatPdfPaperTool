@@ -1,23 +1,23 @@
 package com.pdfTool.services;
 
-import com.pdfTool.components.FilenameEditorController;
+import com.pdfTool.components.FilenameEditor;
 import javafx.concurrent.Task;
 
 import java.util.List;
 
 public class GetNameOptionsTask extends Task<Void> {
-    List<FilenameEditorController> filenameEditors;
-    public GetNameOptionsTask(List<FilenameEditorController> filenameEditors) {
+    List<FilenameEditor> filenameEditors;
+    public GetNameOptionsTask(List<FilenameEditor> filenameEditors) {
         this.filenameEditors = filenameEditors;
     }
 
     private void modify() {
-        for(FilenameEditorController filenameEditor:this.filenameEditors) {
+        for(FilenameEditor filenameEditor:this.filenameEditors) {
             filenameEditor.modify();
         }
     }
     @Override
-    protected Void call() throws Exception {
+    protected Void call() {
         modify();
         return null;
     }

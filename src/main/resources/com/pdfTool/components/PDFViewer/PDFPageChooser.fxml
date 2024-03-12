@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<fx:root type="HBox"
+         stylesheets="@PDFPageChooser.css"
+         alignment="CENTER"
+         xmlns:fx="http://javafx.com/fxml">
+    <TextField fx:id="textField" prefHeight="5" prefWidth="40"/>
+    <Label fx:id="label"/>
+</fx:root>

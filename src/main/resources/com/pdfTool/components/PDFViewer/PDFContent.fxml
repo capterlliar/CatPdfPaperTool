@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.Pane?>
+<fx:root type="Pane"
+         stylesheets="@PDFContent.css"
+         fx:id="pdfcontent"
+         xmlns:fx="http://javafx.com/fxml">
+    <TreeView fx:id="treeView" showRoot="false">
+
+    </TreeView>
+</fx:root>

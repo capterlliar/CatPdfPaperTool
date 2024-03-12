@@ -1,0 +1,12 @@
+package com.pdfTool.components.PDFViewer.event;
+
+import javafx.event.Event;
+import javafx.event.EventType;
+
+public abstract class ViewerEvent extends Event {
+    public static final EventType<ViewerEvent> VIEWER_EVENT_TYPE = new EventType<>(ANY);
+    protected ViewerEvent(EventType<? extends Event> eventType) {
+        super(eventType);
+    }
+    public abstract void invokeHandler(ViewerEventHandler handler);
+}

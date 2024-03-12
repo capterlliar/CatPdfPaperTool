@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<fx:root type="HBox"
+         alignment="CENTER"
+         spacing="10"
+         stylesheets="@PDFZoomTool.css"
+         xmlns:fx="http://javafx.com/fxml">
+    <Button fx:id="btnZoomOut" text="-"/>
+    <TextField fx:id="textFieldZoom" prefWidth="50"/>
+    <Button fx:id="btnZoomIn" text="+"/>
+    <Button fx:id="btnReset" text="Reset"/>
+</fx:root>

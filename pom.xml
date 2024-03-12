@@ -36,6 +36,11 @@
             <artifactId>javafx-web</artifactId>
             <version>${javafx-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>${javafx-version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -48,15 +53,6 @@
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
             <version>2.0.24</version>
-        </dependency>
-
-        <!--javafx pdf viewer. Not available in maven central repository now.
-        Please clone from https://github.com/Patr1ick/fxPDF and install it
-        to your maven local repository first.-->
-        <dependency>
-            <groupId>eu.patrickgeiger</groupId>
-            <artifactId>fxPDF</artifactId>
-            <version>1.1</version>
         </dependency>
 
         <!--javafx icon-->

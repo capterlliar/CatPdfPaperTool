@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<fx:root type="Pane"
+         cache="true"
+         cacheHint="SPEED"
+         stylesheets="@PDFPage.css"
+         xmlns:fx="http://javafx.com/fxml">
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true" pannable="true">
+        <StackPane fx:id="stackPane" styleClass="stackpane">
+            <ImageView fx:id="imageView" StackPane.alignment="CENTER"/>
+        </StackPane>
+    </ScrollPane>
+</fx:root>

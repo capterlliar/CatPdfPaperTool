@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<fx:root type="VBox"
+         spacing="5"
+         stylesheets="@ExportFileView.css"
+         fx:id="exportFile"
+         xmlns:fx="http://javafx.com/fxml">
+    <GridPane hgap="5" vgap="5">
+        <!--first raw-->
+        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="导出路径："/>
+        <TextField fx:id="directory" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="450"/>
+        <Button onAction="#openDirectory" GridPane.rowIndex="0" GridPane.columnIndex="2">
+            <graphic>
+                <FontIcon iconLiteral="fa-folder-open-o"/>
+            </graphic>
+        </Button>
+    </GridPane>
+    <Label text="*选择导出页码，用英文逗号分割，如：1,2-3,5-10,12"/>
+    <HBox>
+        <Label text="*不填写则默认全部导出"/>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label fx:id="text2" text="导出为多个文件"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" prefHeight="200">
+        <VBox fx:id="exportFileItems" spacing="5"/>
+    </ScrollPane>
+
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label fx:id="text1"/>
+        <CheckBox fx:id="exportAsOneFile"/>
+    </HBox>
+    <VBox VBox.vgrow="ALWAYS"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label fx:id="status"/>
+    </HBox>
+    <HBox>
+        <Button onAction="#addFile" text="添加文件">
+            <graphic>
+                <FontIcon iconLiteral="fa-plus-square"/>
+            </graphic>
+        </Button>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Button onAction="#export" text="导出">
+            <graphic>
+                <FontIcon iconLiteral="fa-reply-all"/>
+            </graphic>
+        </Button>
+    </HBox>
+</fx:root>

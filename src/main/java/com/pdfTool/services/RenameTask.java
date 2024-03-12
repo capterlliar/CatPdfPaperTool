@@ -1,24 +1,24 @@
 package com.pdfTool.services;
 
-import com.pdfTool.components.FilenameEditorController;
+import com.pdfTool.components.FilenameEditor;
 import javafx.concurrent.Task;
 
 import java.util.List;
 
 public class RenameTask extends Task<Void> {
-    List<FilenameEditorController> filenameEditors;
-    public RenameTask(List<FilenameEditorController> filenameEditors) {
+    List<FilenameEditor> filenameEditors;
+    public RenameTask(List<FilenameEditor> filenameEditors) {
         this.filenameEditors = filenameEditors;
     }
 
     private void rename() {
-        for(FilenameEditorController filenameEditor:this.filenameEditors) {
+        for(FilenameEditor filenameEditor:this.filenameEditors) {
             filenameEditor.rename();
         }
     }
 
     @Override
-    protected Void call() throws Exception {
+    protected Void call() {
         rename();
         return null;
     }

@@ -1,8 +1,8 @@
 package com.pdfTool;
 
-import com.pdfTool.MenuFunctions.ExportFileViewController;
-import com.pdfTool.MenuFunctions.MergeFileViewController;
-import com.pdfTool.MenuFunctions.PrintViewController;
+import com.pdfTool.menuFunctions.ExportFileViewController;
+import com.pdfTool.menuFunctions.MergeFileViewController;
+import com.pdfTool.menuFunctions.PrintViewController;
 import com.pdfTool.defination.ExportType;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.FileUtil;

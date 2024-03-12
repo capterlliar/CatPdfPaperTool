@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.text.Text?>
+<?import com.pdfTool.components.FileList?>
+<fx:root type="VBox"
+         stylesheets="@MergeFileView.css"
+         fx:id="mergeFile"
+         spacing="5"
+         xmlns:fx="http://javafx.com/fxml">
+    <VBox spacing="5">
+        <Text text="选择打印机："/>
+        <ChoiceBox fx:id="printerChoiceBox" prefWidth="400"/>
+        <GridPane>
+            <HBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Text text="份数：" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <TextField fx:id="copy" text="1" prefWidth="50" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        </GridPane>
+    </VBox>
+
+    <Separator/>
+
+    <FileList fx:id="fileList"/>
+
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Label fx:id="status"/>
+    </HBox>
+
+    <HBox>
+        <Button onAction="#addFile" text="添加文件">
+            <graphic>
+                <FontIcon iconLiteral="fa-plus-square"/>
+            </graphic>
+        </Button>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Button onAction="#print" text="打印">
+            <graphic>
+                <FontIcon iconLiteral="fa-print"/>
+            </graphic>
+        </Button>
+    </HBox>
+</fx:root>
