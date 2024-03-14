@@ -1,7 +1,6 @@
 module com.pdfTool {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
     requires javafx.swing;
     requires static lombok;
     requires org.kordamp.ikonli.core;
@@ -21,5 +20,4 @@ module com.pdfTool {
     exports com.pdfTool.menuFunctions;
     exports com.pdfTool.services;
     exports com.pdfTool.components.PDFViewer;
-
 }

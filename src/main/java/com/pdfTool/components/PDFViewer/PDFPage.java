@@ -191,7 +191,7 @@ public class PDFPage extends Pane {
         this.fireEvent(new ViewerActionEvent(Parameter.RENDER));
     }
 
-    public void loadPage(@NonNull int pageNumber) {
+    public void loadPage(int pageNumber) {
         if (pageNumber >= 0 && pageNumber < this.pdf.getNumberOfPages()) {
             this.currentpage = pageNumber;
             this.fireEvent(new ViewerActionEvent(Parameter.RENDER));
