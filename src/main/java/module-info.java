@@ -12,13 +12,14 @@ module com.pdfTool {
 
     opens com.pdfTool to javafx.fxml;
     opens com.pdfTool.components to javafx.fxml;
+    opens com.pdfTool.menuFunctions to javafx.fxml;
+    opens com.pdfTool.components.PDFViewer to javafx.fxml;
     exports com.pdfTool;
     exports com.pdfTool.utils;
     exports com.pdfTool.defination;
     exports com.pdfTool.components;
     exports com.pdfTool.menuFunctions;
-    opens com.pdfTool.menuFunctions to javafx.fxml;
     exports com.pdfTool.services;
     exports com.pdfTool.components.PDFViewer;
-    opens com.pdfTool.components.PDFViewer to javafx.fxml;
+
 }
