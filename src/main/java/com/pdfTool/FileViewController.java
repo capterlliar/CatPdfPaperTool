@@ -92,7 +92,6 @@ public class FileViewController extends BorderPane {
     public void focusOn(TreeItem<HBox> treeItem) {
         int i = this.treeView.getRow(treeItem);
         this.treeView.scrollTo(i);
-        this.treeView.getSelectionModel().select(treeItem);
     }
     public void remove(FilenameEditor child) {
         this.rootNode.getChildren().remove(child);
@@ -130,7 +129,6 @@ public class FileViewController extends BorderPane {
 
         Thread thread = new Thread(getNameOptionsTask);
         thread.start();
-        //TODO:thread pool
     }
 
     @FXML

@@ -1,0 +1,26 @@
+.label {
+    -fx-wrap-text: true;
+}
+
+.hyperlink {
+    -fx-border-width: 0;
+}
+
+.t1 {
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+.t2 {
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
+#scrollPane {
+    -fx-padding: 10 20 20 20;
+}
+
+#scrollPane, #scrollPane:selected, #scrollPane:focused {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+}

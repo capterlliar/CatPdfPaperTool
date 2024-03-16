@@ -46,7 +46,7 @@ public class FilenameEditor extends TreeItem<HBox> {
         this.parent = parent;
         this.warning.setVisible(false);
         this.setText(renameItem.getFile().getName());
-        this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-100));
+        this.textArea.prefWidthProperty().bind(this.value.widthProperty().add(-120));
         this.expandedProperty().addListener((observableValue, aBoolean, t1) -> this.parent.focusOn(this));
     }
     public String getText() {

@@ -18,5 +18,5 @@
     <Button text="打印所选项" onAction="#print"></Button>
     <Button text="提取所选文件图片" onAction="#getPicture"></Button>
     <Button text="提取所选文件文字" onAction="#getText"></Button>
-    <Button text="关于" onAction="#getAbout"></Button>
+    <Button text="使用说明" onAction="#getAbout"></Button>
 </fx:root>

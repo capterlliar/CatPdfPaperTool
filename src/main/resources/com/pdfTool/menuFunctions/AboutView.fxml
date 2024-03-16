@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <fx:root type="VBox"
+         prefWidth="500"
          stylesheets="@AboutView.css"
          fx:id="about"
-         spacing="5"
          xmlns:fx="http://javafx.com/fxml">
-    <HBox>
-        <Label text="Github项目链接："/>
-        <Hyperlink text="https://github.com/capterlliar/CatPdfPaperTool/"/>
-    </HBox>
-    <Separator/>
-    <Label text="PDF论文信息提取工具"/>
-    <Label text="PDF论文信息提取工具"/>
+    <ScrollPane fitToWidth="true" fx:id="scrollPane">
+        <VBox>
+            <Label text="Github项目链接："/>
+            <Hyperlink fx:id="link" text="https://github.com/capterlliar/CatPdfPaperTool/"/>
+
+            <Separator style="-fx-padding: 5 0 5 0"/>
+
+            <Label styleClass="t1" text="PDF论文信息提取器v1.0"/>
+            <Label text="主要功能：提取论文标题、分割或合并PDF、提取文字或图片、打印"/>
+            <Label text=" "/>
+            <Label styleClass="t2" text="0. 导入文件"/>
+            <Label text="    可以选择菜单中 导入文件 或 导入目录 选项。如果选择 导入目录 ，则递归导入该目录下所有PDF文件。"/>
+            <Label text=" "/>
+            <Label styleClass="t2" text="1. 提取论文标题"/>
+            <Label text="    文件导入后显示在主界面右侧，点击 自动提取所选论文标题 ，论文标题自动替换为检测结果。如果检测结果不准确，可点击左侧小三角展开候选项选择合适题目，或编辑文本框自行更改。更改完毕点击 重命名 按钮更新所选论文标题。"/>
+            <Label text=" "/>
+            <Label styleClass="t2" text="2. 分割或合并PDF"/>
+            <Label text="    选择需要合并的文件，并指定导出路径和导出文件名，导出文件为PDF格式，如果导出文件名不以.pdf结尾，软件会自动添加后缀。"/>
+            <Label text="    分割PDF："/>
+            <Label text="    选择需要分割的文件，并指定导出路径。对于每个需要分割的文件，按提示填写所需页数。"/>
+            <Label text="    导出规则：  "/>
+            <Label text="    1. 对于每个文件，默认将所有导出页面合并在一个PDF中。导出PDF与原文件标题相同，在标题末加数字以区分，如："/>
+            <Label text="      - 原文件名：xxxxx.pdf"/>
+            <Label text="      - 导出文件名：xxxxx(1).pdf"/>
+            <Label text="    2. 如果将所选页面需要导出为多个文件，勾选复选框。导出PDF标题为 原PDF标题+导出页码 ，如："/>
+            <Label text="      - 原文件名：xxxxx.pdf"/>
+            <Label text="      - 导出文件名：xxxxx3-5.pdf"/>
+            <Label text="    3. 同时，也可以选择将所有导出页面合并为一个PDF，导出文件标题如："/>
+            <Label text="      - xxxx等3个文件.pdf"/>
+            <Label text=" "/>
+            <Label styleClass="t2" text="3. 提取文字或图片"/>
+            <Label text="    提取文字或图片功能使用与分割PDF功能相似。其中，所提取图片默认以所属文件分类，也可以选择全部导出在一个目录下。"/>
+            <Label text=" "/>
+            <Label styleClass="t2" text="4. 打印"/>
+        </VBox>
+    </ScrollPane>
 </fx:root>
