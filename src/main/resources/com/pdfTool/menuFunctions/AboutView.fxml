@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<fx:root type="VBox"
+         stylesheets="@AboutView.css"
+         fx:id="about"
+         spacing="5"
+         xmlns:fx="http://javafx.com/fxml">
+    <HBox>
+        <Label text="Github项目链接："/>
+        <Hyperlink text="https://github.com/capterlliar/CatPdfPaperTool/"/>
+    </HBox>
+    <Separator/>
+    <Label text="PDF论文信息提取工具"/>
+    <Label text="PDF论文信息提取工具"/>
+</fx:root>

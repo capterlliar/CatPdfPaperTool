@@ -1,5 +1,6 @@
 package com.pdfTool;
 
+import com.pdfTool.menuFunctions.AboutViewController;
 import com.pdfTool.menuFunctions.ExportFileViewController;
 import com.pdfTool.menuFunctions.MergeFileViewController;
 import com.pdfTool.menuFunctions.PrintViewController;
@@ -79,7 +80,8 @@ public class MenuViewController extends HBox {
     }
 
     @FXML
-    protected void getHelper(){
-
+    protected void getAbout(){
+        AboutViewController aboutView = new AboutViewController();
+        aboutView.show();
     }
 }
