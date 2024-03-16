@@ -1,16 +1,23 @@
 package com.pdfTool.menuFunctions;
 
-import com.pdfTool.defination.ExportType;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
 import java.util.Objects;
 
 public class AboutViewController extends VBox {
+    @FXML
+    Hyperlink link;
+    Desktop desktop = null;
     Stage stage;
     public AboutViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AboutView.fxml"));
@@ -19,9 +26,20 @@ public class AboutViewController extends VBox {
 
         try {
             fxmlLoader.load();
+            init();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+    private void init() {
+        this.desktop = Desktop.getDesktop();
+        this.link.setOnAction(e -> {
+            try {
+                this.desktop.browse(URI.create(this.link.getText()));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
     public void show() {
         Scene scene = new Scene(this);
