@@ -1,5 +1,6 @@
 package com.pdfTool.menuFunctions;
 
+import com.pdfTool.components.ExportFileItem;
 import com.pdfTool.components.FileItem;
 import com.pdfTool.components.FileList;
 import com.pdfTool.components.RemovableItem;
@@ -47,6 +48,10 @@ public class PrintViewController extends VBox {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
+    }
+    public void addFile(List<File> files) {
+        if(files==null) return;
+        this.fileList.addFile(files);
     }
     private void init() {
         List<PrintService> printServices = PrinterUtil.getPrintServices();

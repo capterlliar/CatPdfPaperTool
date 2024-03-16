@@ -60,6 +60,7 @@ public class MenuViewController extends HBox {
     @FXML
     protected void print(){
         PrintViewController printFile = new PrintViewController();
+        printFile.addFile(FileViewController.getInstance().exportSelectedFiles());
         printFile.show();
     }
 

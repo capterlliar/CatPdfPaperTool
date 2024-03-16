@@ -2,3 +2,5 @@
 /src/main/resources/com/pdfTool/testfiles/
 /target/
 /exe/
+/dependency-reduced-pom.xml
+/exe.zip
