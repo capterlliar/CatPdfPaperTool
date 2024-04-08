@@ -39,6 +39,7 @@ public class ExportFileTask extends Task<Void> {
             List<File> splittedFiles = PDFUtil.splitAsMutiFiles(pages, file, tempDir);
             this.updateMessage(file.getName());
             fileList.addAll(splittedFiles);
+            if(this.isCancelled()) return;
         }
         String newPath = FileUtil.getFileListName(this.directory, fileList, ".pdf");
         if(newPath == null) return;
@@ -57,6 +58,7 @@ public class ExportFileTask extends Task<Void> {
                 splittedFiles.forEach(File::delete);
             }
             this.updateMessage(file.getName());
+            if(this.isCancelled()) return;
         }
     }
     private void imageIntoMutiDirs() throws IOException {
@@ -68,6 +70,7 @@ public class ExportFileTask extends Task<Void> {
             if(!dir.exists()) dir.mkdirs();
             PDFUtil.getImages(pages, file, tempDir);
             this.updateMessage(file.getName());
+            if(this.isCancelled()) return;
         }
     }
     private void imageIntoOneDir() throws IOException {
@@ -76,6 +79,7 @@ public class ExportFileTask extends Task<Void> {
             List<Pair<Integer, Integer>> pages = exportItem.getSelectedPages();
             PDFUtil.getImages(pages, file, this.directory);
             this.updateMessage(file.getName());
+            if(this.isCancelled()) return;
         }
     }
     private void textIntoMutiFiles() throws IOException {
@@ -89,6 +93,7 @@ public class ExportFileTask extends Task<Void> {
                 PDFUtil.getTextAsOneFile(pages, file, this.directory);
             }
             this.updateMessage(file.getName());
+            if(this.isCancelled()) return;
         }
     }
     private void textIntoOneFile() throws IOException {
@@ -101,6 +106,7 @@ public class ExportFileTask extends Task<Void> {
             List<Pair<Integer, Integer>> pages = exportItem.getSelectedPages();
             PDFUtil.appendText(pages, file, output);
             this.updateMessage(file.getName());
+            if(this.isCancelled()) return;
         }
         output.close();
     }

@@ -34,6 +34,7 @@ public class MergeFileViewController extends VBox {
     @FXML
     Label status;
     Stage stage;
+    MergeFileTask mergeFileTask;
     public MergeFileViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MergeFileView.fxml"));
         fxmlLoader.setRoot(this);
@@ -58,6 +59,10 @@ public class MergeFileViewController extends VBox {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pdfTool/images/cat.png"))));
         }
+        stage.setOnCloseRequest(e -> {
+            if(this.mergeFileTask == null) return;
+            if(this.mergeFileTask.isRunning()) this.mergeFileTask.cancel();
+        });
         stage.setTitle("合并所选项");
         stage.setScene(scene);
         stage.show();
@@ -117,7 +122,7 @@ public class MergeFileViewController extends VBox {
 
         this.getFileItems().forEach(fileItem -> fileItem.setFilenameColor("black"));
 
-        MergeFileTask mergeFileTask = new MergeFileTask(dest, oldFiles);
+        mergeFileTask = new MergeFileTask(dest, oldFiles);
         mergeFileTask.setOnSucceeded(e -> this.setStatus("合并成功", "green"));
         mergeFileTask.setOnFailed(e -> {
             this.setStatus("合并失败", "red");

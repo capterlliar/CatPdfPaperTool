@@ -142,7 +142,7 @@ public class FileViewController extends BorderPane {
                     this.files.add(filenameEditor.exportExistingFile()));
         });
         renameTask.setOnFailed(e -> {
-            this.setStatus("该文件重命名失败", "red");
+            this.setStatus("该文件重命名失败，请检查文件是否存在或正在被使用", "red");
             this.getSelectedNodes().forEach(filenameEditor ->
                     this.files.add(filenameEditor.exportExistingFile()));
             Throwable exc = renameTask.getException();

@@ -40,6 +40,7 @@ public class ExportFileViewController extends VBox {
     Label status;
     ExportType exportType;
     Stage stage;
+    ExportFileTask exportFileTask;
     public ExportFileViewController(ExportType type) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ExportFileView.fxml"));
         fxmlLoader.setRoot(this);
@@ -79,6 +80,10 @@ public class ExportFileViewController extends VBox {
                         Objects.requireNonNull(
                             getClass().getResourceAsStream("/com/pdfTool/images/cat.png"))));
         }
+        stage.setOnCloseRequest(e -> {
+            if(this.exportFileTask == null) return;
+            if(this.exportFileTask.isRunning()) this.exportFileTask.cancel();
+        });
         stage.setTitle(this.exportType.getWindowName());
         stage.setScene(scene);
         stage.show();
@@ -148,7 +153,7 @@ public class ExportFileViewController extends VBox {
 
         this.getExportFileItems().forEach(exportFileItem -> exportFileItem.setFilenameColor("black"));
 
-        ExportFileTask exportFileTask = new ExportFileTask(exportItems, this.exportType,
+        exportFileTask = new ExportFileTask(exportItems, this.exportType,
                 dir, this.isexportAsOneFile());
         exportFileTask.setOnSucceeded(e -> this.setStatus("导出成功", "green"));
         exportFileTask.setOnFailed(e -> {

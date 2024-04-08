@@ -84,6 +84,7 @@ public final class PDFUtil {
 
     public static List<RenderedImage> getImagesFromResources(PDResources resources) throws IOException {
         List<RenderedImage> images = new ArrayList<>();
+        if (resources == null) return images;
         for (COSName xObjectName : resources.getXObjectNames()) {
             PDXObject xObject = resources.getXObject(xObjectName);
             if (xObject instanceof PDImageXObject) {
@@ -111,6 +112,7 @@ public final class PDFUtil {
                 PDPage page = document.getPage(i-1);
                 PDResources resources = page.getResources();
                 List<RenderedImage> images = getImagesFromResources(resources);
+                System.gc();
                 int cnt = 1;
                 for(RenderedImage image:images) {
                     String newFile = FileUtil.getUniqueFilename(dest,  filename + " p"+ i + "(" + cnt + ")", ".png");
