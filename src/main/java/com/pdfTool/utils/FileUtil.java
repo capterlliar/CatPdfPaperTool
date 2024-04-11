@@ -98,7 +98,7 @@ public final class FileUtil {
 
     public static String cleanFileName(String input) {
         input = input.replace("- ", "");
-        input = input.replaceAll("\\?|\u3001|\u2572|/|\\*|<|>|:", "_");
+        input = input.replaceAll("\\?|、|╲|/|\\|\\*|<|>|:", "_");
         return input.trim();
     }
 

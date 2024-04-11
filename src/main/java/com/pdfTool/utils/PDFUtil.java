@@ -43,6 +43,7 @@ public final class PDFUtil {
         renameItem.setOptions(options);
 
         document.close();
+        System.gc();
     }
 
     public static void mergeFiles(String destFilename, List<File> oldFiles) throws IOException {

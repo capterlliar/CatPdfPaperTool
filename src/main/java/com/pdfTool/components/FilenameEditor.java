@@ -63,6 +63,7 @@ public class FilenameEditor extends TreeItem<HBox> {
     }
     public void chooseOption(String text) {
         this.setText(text);
+        this.setExpanded(false);
     }
     public String getNewPath() {
         String newPath = FileUtil.getFileDirectory(renameItem.getFile())+File.separator+this.getText();
@@ -115,6 +116,7 @@ public class FilenameEditor extends TreeItem<HBox> {
     protected void openPDF() {
         PDFViewController.getInstance().loadPDF(this.renameItem.getFile().getPath());
         this.parent.focusOn(this);
+        System.gc();
     }
     @FXML
     protected void remove() {

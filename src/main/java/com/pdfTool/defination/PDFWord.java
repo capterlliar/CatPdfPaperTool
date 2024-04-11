@@ -8,6 +8,15 @@ public class PDFWord {
     @Getter
     Float maxFontSize;
 
+    @Getter
+    Float yPos;
+
+    public PDFWord(String character, float fontSize, float yPos) {
+        this.word = character;
+        this.maxFontSize = fontSize;
+        this.yPos = yPos;
+    }
+
     public PDFWord(String character, float fontSize) {
         this.word = character;
         this.maxFontSize = fontSize;

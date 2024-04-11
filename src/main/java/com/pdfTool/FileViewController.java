@@ -91,6 +91,8 @@ public class FileViewController extends BorderPane {
     }
     public void focusOn(TreeItem<HBox> treeItem) {
         int i = this.treeView.getRow(treeItem);
+        this.treeView.getSelectionModel().clearSelection();
+        this.treeView.getFocusModel().focus(i);
         this.treeView.scrollTo(i);
     }
     public void remove(FilenameEditor child) {
