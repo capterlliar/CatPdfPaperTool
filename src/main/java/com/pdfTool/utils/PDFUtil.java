@@ -36,10 +36,10 @@ public final class PDFUtil {
         titleFilter.getText(document);
 
         List<String> options = new ArrayList<>(titleFilter.getTitle());
-        String title = document.getDocumentInformation().getTitle();
-        if(title != null){
-            if(!title.trim().equals("")) options.add(title);
-        }
+//        String title = document.getDocumentInformation().getTitle();
+//        if(title != null){
+//            if(!title.trim().equals("")) options.add(title);
+//        }
         renameItem.setOptions(options);
 
         document.close();

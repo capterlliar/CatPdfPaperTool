@@ -18,8 +18,6 @@ import java.util.*;
 
 public class PDFTitleFilter extends PDFTextStripper {
     public List<PDFWord> pdfWords;
-    private final int MIN_TITLE_LENTH = 2;
-    private final int MAX_TITLE_LENTH = 50;
 
     public PDFTitleFilter() throws IOException {
         super();
@@ -51,7 +49,7 @@ public class PDFTitleFilter extends PDFTextStripper {
                 String titleOption = FileUtil.cleanFileName(FileUtil.JoinString(statement, " "));
                 if(!titleOption.equals("")) {
                     String[] s = titleOption.split(" ");
-                    if(s.length > MIN_TITLE_LENTH && s.length <= MAX_TITLE_LENTH) {
+                    if(s.length > 2 && s.length <= 50) {
                         title.add(new PDFWord(FileUtil.cleanFileName(titleOption), fontsize));
                     }
                 }
@@ -65,19 +63,27 @@ public class PDFTitleFilter extends PDFTextStripper {
     }
 
     private List<String> sortTitleOptions(List<PDFWord> titles) {
-        Set<String> options = new HashSet<>();
+        List<String> options = new ArrayList<>();
+        options.addAll(titles.stream()
+                .limit(5)
+                .map(PDFWord::getWord).toList());
         options.addAll(titles.stream()
                 .sorted(Comparator.comparing(PDFWord::getMaxFontSize).reversed())
-                .limit(2)
+                .limit(5)
                 .map(PDFWord::getWord).toList());
-        options.addAll(titles.stream()
-                .limit(2)
-                .map(PDFWord::getWord).toList());
+        options = options.stream().distinct().toList();
         List<String> res = new ArrayList<>();
         for(String title: options) {
             int n = title.length()-title.replaceAll(",", "").length();
-            if(n >= 5) res.add(title);
-            else res.add(0, title);
+            if(Character.isUpperCase(title.charAt(0)) && n <= 3) {
+                res.add(title);
+            }
+        }
+        for(String title: options) {
+            int n = title.length()-title.replaceAll(",", "").length();
+            if(!(Character.isUpperCase(title.charAt(0)) && n <= 3)) {
+                res.add(title);
+            }
         }
         return res;
     }
