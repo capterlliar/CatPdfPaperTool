@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Label?>
 <fx:root type="TreeItem"
-         fx:id="singleFileViewer"
+         fx:id="filenameEditor"
          xmlns:fx="http://javafx.com/fxml">
     <value>
         <HBox fx:id="value" stylesheets="@FilenameEditor.css" spacing="5">
