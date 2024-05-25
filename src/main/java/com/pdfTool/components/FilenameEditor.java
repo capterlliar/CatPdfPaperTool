@@ -5,6 +5,7 @@ import com.pdfTool.PDFViewController;
 import com.pdfTool.defination.RenameItem;
 import com.pdfTool.utils.FileUtil;
 import com.pdfTool.utils.PDFUtil;
+import com.pdfTool.utils.TimeUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -114,6 +115,7 @@ public class FilenameEditor extends TreeItem<HBox> {
 
     @FXML
     protected void openPDF() {
+        TimeUtil.start();
         PDFViewController.getInstance().loadPDF(this.renameItem.getFile().getPath());
         this.parent.focusOn(this);
         System.gc();

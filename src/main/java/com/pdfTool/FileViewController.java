@@ -4,6 +4,7 @@ import com.pdfTool.components.FilenameEditor;
 import com.pdfTool.defination.RenameItem;
 import com.pdfTool.services.GetNameOptionsTask;
 import com.pdfTool.services.RenameTask;
+import com.pdfTool.utils.TimeUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -120,14 +121,21 @@ public class FileViewController extends BorderPane {
     @FXML
     protected void modify() {
         GetNameOptionsTask getNameOptionsTask = new GetNameOptionsTask(this.getSelectedNodes());
-        getNameOptionsTask.setOnSucceeded(e -> this.setStatus("获取成功", "green"));
+        getNameOptionsTask.setOnSucceeded(e -> {
+            this.setStatus("获取成功", "green");
+            TimeUtil.end();
+        });
         getNameOptionsTask.setOnFailed(e -> {
             this.setStatus("该文件错误", "red");
             Throwable exc = getNameOptionsTask.getException();
             log.error(exc);
             exc.printStackTrace();
         });
-        getNameOptionsTask.setOnRunning(e -> this.setStatus("获取论文标题中...", "black"));
+        getNameOptionsTask.setOnRunning(e -> {
+            this.setStatus("获取论文标题中...", "black");
+            TimeUtil.end();
+        });
+        TimeUtil.start();
 
         Thread thread = new Thread(getNameOptionsTask);
         thread.start();
@@ -142,6 +150,7 @@ public class FileViewController extends BorderPane {
             this.setStatus("重命名成功", "green");
             this.getSelectedNodes().forEach(filenameEditor ->
                     this.files.add(filenameEditor.exportExistingFile()));
+            TimeUtil.end();
         });
         renameTask.setOnFailed(e -> {
             this.setStatus("该文件重命名失败，请检查文件是否存在或正在被使用", "red");
@@ -152,6 +161,7 @@ public class FileViewController extends BorderPane {
             exc.printStackTrace();
         });
         renameTask.setOnRunning(e -> this.setStatus("正在重命名", "black"));
+        TimeUtil.start();
 
         Thread thread = new Thread(renameTask);
         thread.start();

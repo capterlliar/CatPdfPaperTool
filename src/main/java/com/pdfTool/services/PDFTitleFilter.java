@@ -111,6 +111,8 @@ public class PDFTitleFilter extends PDFTextStripper {
                 .map(PDFWord::getMaxFontSize)
                 .distinct()
                 .sorted(Comparator.reverseOrder()).toList();
-        return list.subList(0, Math.min(list.size() / 3 + 1, list.size()));
+        int num = Math.min(list.size() / 3 + 1, list.size());
+        if(list.size() <= 2) num = list.size();
+        return list.subList(0, num);
     }
 }

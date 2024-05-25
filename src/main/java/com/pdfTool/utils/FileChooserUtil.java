@@ -14,9 +14,9 @@ public final class FileChooserUtil {
 
     static {
         fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("PDF", "*.pdf")
-        );
+//        fileChooser.getExtensionFilters().add(
+//                new FileChooser.ExtensionFilter("PDF", "*.pdf")
+//        );
         directoryChooser = new DirectoryChooser();
     }
 

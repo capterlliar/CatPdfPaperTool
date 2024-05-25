@@ -6,6 +6,7 @@ import com.pdfTool.components.RemovableItem;
 import com.pdfTool.services.MergeFileTask;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.FileUtil;
+import com.pdfTool.utils.TimeUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -123,14 +124,21 @@ public class MergeFileViewController extends VBox {
         this.getFileItems().forEach(fileItem -> fileItem.setFilenameColor("black"));
 
         mergeFileTask = new MergeFileTask(dest, oldFiles);
-        mergeFileTask.setOnSucceeded(e -> this.setStatus("合并成功", "green"));
+        mergeFileTask.setOnSucceeded(e -> {
+            this.setStatus("合并成功", "green");
+            TimeUtil.end();
+        });
         mergeFileTask.setOnFailed(e -> {
             this.setStatus("合并失败", "red");
             Throwable exc = mergeFileTask.getException();
             log.error(exc);
             exc.printStackTrace();
         });
-        mergeFileTask.setOnRunning(e -> this.setStatus("导出中", "black"));
+        mergeFileTask.setOnRunning(e -> {
+            this.setStatus("导出中", "black");
+            TimeUtil.end();
+        });
+        TimeUtil.start();
         mergeFileTask.messageProperty().addListener((observableValue, s, t1) ->
                 this.getFileItems().forEach(fileItem -> {
                     if(fileItem.getFile().getName().equals(t1)) {

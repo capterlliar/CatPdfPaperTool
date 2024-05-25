@@ -7,6 +7,7 @@ import com.pdfTool.defination.ExportType;
 import com.pdfTool.services.ExportFileTask;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.FileUtil;
+import com.pdfTool.utils.TimeUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -155,14 +156,21 @@ public class ExportFileViewController extends VBox {
 
         exportFileTask = new ExportFileTask(exportItems, this.exportType,
                 dir, this.isexportAsOneFile());
-        exportFileTask.setOnSucceeded(e -> this.setStatus("导出成功", "green"));
+        exportFileTask.setOnSucceeded(e -> {
+            this.setStatus("导出成功", "green");
+            TimeUtil.end();
+        });
         exportFileTask.setOnFailed(e -> {
             this.setStatus("导出失败", "red");
             Throwable exc = exportFileTask.getException();
             log.error(exc);
             exc.printStackTrace();
         });
-        exportFileTask.setOnRunning(e -> this.setStatus("导出中", "black"));
+        exportFileTask.setOnRunning(e -> {
+            this.setStatus("导出中", "black");
+            TimeUtil.end();
+        });
+        TimeUtil.start();
         exportFileTask.messageProperty().addListener((observableValue, s, t1) ->
                 this.getExportFileItems().forEach(exportFileItem -> {
             if(exportFileItem.getFile().getName().equals(t1)) {

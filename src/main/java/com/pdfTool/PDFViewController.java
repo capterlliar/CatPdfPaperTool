@@ -2,6 +2,7 @@ package com.pdfTool;
 
 import com.pdfTool.components.PDFViewer.PDFViewer;
 import com.pdfTool.defination.PDF;
+import com.pdfTool.utils.TimeUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -44,6 +45,7 @@ public class PDFViewController extends HBox {
             }
             pdfViewer.setPrefWidth(10000);
             this.getChildren().add(pdfViewer);
+            TimeUtil.end();
         } catch (Exception e) {
             Label label = new Label("打开失败，请检查文件格式");
             this.getChildren().add(label);

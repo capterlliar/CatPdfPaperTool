@@ -6,6 +6,7 @@ import com.pdfTool.components.RemovableItem;
 import com.pdfTool.services.PrintFileTask;
 import com.pdfTool.utils.FileChooserUtil;
 import com.pdfTool.utils.PrinterUtil;
+import com.pdfTool.utils.TimeUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -113,7 +114,11 @@ public class PrintViewController extends VBox {
             log.error(exc);
             exc.printStackTrace();
         });
-        printFileTask.setOnRunning(e -> this.setStatus("打印中", "black"));
+        printFileTask.setOnRunning(e -> {
+            this.setStatus("打印中", "black");
+            TimeUtil.end();
+        });
+        TimeUtil.start();
         printFileTask.messageProperty().addListener((observableValue, s, t1) ->
                 this.getFileItems().forEach(fileItem -> {
                     if(fileItem.getFile().getName().equals(t1)) {

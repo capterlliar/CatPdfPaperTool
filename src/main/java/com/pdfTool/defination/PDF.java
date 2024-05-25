@@ -1,6 +1,7 @@
 package com.pdfTool.defination;
 
 import com.pdfTool.components.PDFViewer.PDFResourceCache;
+import com.pdfTool.utils.TimeUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
@@ -30,9 +31,11 @@ public class PDF {
 
     public BufferedImage renderPage(int pageNumber, int dpi) {
         try {
+            TimeUtil.start();
             if (pageNumber <= getNumberOfPages()) {
                 BufferedImage currentImage = renderer.renderImageWithDPI(pageNumber, dpi);
                 System.gc();
+                TimeUtil.end();
                 return currentImage;
             } else return null;
         } catch (Exception e) {
