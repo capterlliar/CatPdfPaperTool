@@ -1,6 +1,11 @@
 ### PDF论文信息提取工具
 主要功能：提取论文标题、分割或合并PDF、提取文字或图片、打印
 
+#### 安装说明
+- 如果您已经安装JDK17及以上Java版本，可直接下载exe文件并运行。
+- 否则，请下载exe和jre（由于上传限制无法将它们放在一个压缩包内），并将两者放置于统一目录下，如：  
+  <img src="https://github.com/capterlliar/CatPdfPaperTool/blob/master/pics/install.png" width="400px">
+
 ------------
 
 #### 0. 导入文件
